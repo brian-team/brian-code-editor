@@ -20,47 +20,7 @@
   ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "extension.compileBrainFile",
-        "title": "Compile Brain File"
-      },
-      {
-        "command": "extension.runBrainFile",
-        "title": "Run Brain File"
-      },
-      {
-        "command": "extension.formatBrainFile",
-        "title": "Format Brain File"
-      },
-      {
-        "command": "extension.validateBrainFile",
-        "title": "Validate Brain File"
-      },
-      {
-        "command": "extension.openBrainDocumentation",
-        "title": "Open Brain Documentation"
-      },
-      {
-        "command": "extension.toggleBrainPanel",
-        "title": "Toggle Brain Panel"
-      }
-    ],
-
-    "keybindings":[
-      {
-        "command": "extension.compileBrainFile",
-        "key": "ctrl + shift + b",
-        "mac": "cmd + shift + b",
-        "when": "editorTextFocus && editorLangId == brian"
-      },
-      {
-        "command": "extension.runBrainFile",
-        "key": "ctrl + shift + r",
-        "mac": "cmd + shift + r",
-        "when": "editorTextFocus && editorLangId == brian"
-      }
-    ],
+    
     "languages": [
       {
         "id": "brian",
@@ -77,7 +37,7 @@
       {
         "language": "brian",
         "scopeName": "source.brian",
-        "path": "./syntaxes/brian.tmLanguage.json"
+        "path": "./brianLang/syntax/brian.tmLanguage.json"
       }
     ],
 

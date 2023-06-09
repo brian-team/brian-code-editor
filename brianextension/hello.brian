@@ -2,6 +2,7 @@
 /*
 Multi Line Comment
 */
+{hhe}
 eqs = '''
 dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
 dge/dt = -ge/taue : volt

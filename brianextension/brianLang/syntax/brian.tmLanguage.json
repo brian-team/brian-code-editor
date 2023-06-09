@@ -24,19 +24,8 @@
       "bracket": {
         "patterns": [
           {
-            "name": "bracket.curly.brian",
-            "begin": "\\{",
-            "end": "\\}"
-          },
-          {
-            "name": "bracket.round.brian",
-            "begin": "\\(",
-            "end": "\\)"
-          },
-          {
-            "name": "bracket.square.brian",
-            "begin": "\\[",
-            "end": "\\]"
+            "name": "bracket.bracket.brian",
+            "match": "[\\[\\](){}]"
           }
         ]
       },

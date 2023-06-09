@@ -1,4 +1,7 @@
-
+# Single Line Comment
+/*
+Multi Line Comment
+*/
 eqs = '''
 dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
 dge/dt = -ge/taue : volt

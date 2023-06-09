@@ -44,7 +44,7 @@
         "patterns": [
           {
             "name": "comment.line.brian",
-            "match": "//.*$"
+            "match": "#.*$"
           },
           {
             "name": "comment.block.brian",

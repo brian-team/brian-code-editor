@@ -1,82 +1,165 @@
 {
-    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-    "name": "Brian",
-    "scopeName": "source.brian",
-    "fileTypes": ["brian"],
-    "patterns": [
-      {
-        "include": "#comments"
-      },
-      {
-        "include": "#equation"
-      },
-      {
-        "include": "#variableName"
-      },
-      {
-        "include": "#constant"
-      },
-      {
-        "include": "#bracket"
-      }
-    ],
-    "repository": {
-      "bracket": {
-        "patterns": [
-          {
-            "name": "bracket.bracket.brian",
-            "match": "[\\[\\](){}]"
-          }
-        ]
-      },
-      "comments": {
-        "patterns": [
-          {
-            "name": "comment.line.brian",
-            "match": "#.*$"
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Brian",
+  "scopeName": "source.brian",
+  "fileTypes": ["brian"],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#equation"
+    },
+    {
+      "include": "#constant"
+    },
+    {
+      "include": "#variableName"
+    },
+
+    {
+      "include": "#bracket"
+    },
+    {
+      "include": "#operator"
+    }
+  ],
+  "repository": {
+    "equation": {
+      "patterns": [
+        {
+          "name": "keyword.equation_after_colon.brian",
+          "begin": ":\\s*",
+          "end": "$"
+        }
+      ]
+    },
+    "constant": {
+      "patterns": [
+        {
+          "name": "constant.numeric.brian",
+          "match": "\\b\\d+(\\.\\d+)?\\b"
+        },
+        {
+          "name": "constant.character.brian",
+          "match":"\\b\\w\\b"
+        },
+        {
+          "name": "constant.language.brian",
+          "match": "\\b(true|false|null)\\b"
+        },
+        {
+          "name": "constant.other.brian",
+          "match": "\\b\\w+\\b"
+        }
+      ]
+    },
+    "bracket": {
+      "patterns": [
+        {
+          "name": "bracket.bracket.brian",
+          "match": "[\\[\\](){}]"
+        }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.brian",
+          "match": "#.*$"
+        },
+        {
+          "name": "comment.block.brian",
+          "begin": "\\/\\*",
+          "end": "\\*\\/"
+        }
+      ]
+    },
+    "operator": {
+      "patterns": [
+        {
+          "match": "(?:=|:=|\\+=|-=|\\*=|/=|//=|\\.//=|\\.\\*=|\\\\=|\\.\\\\=|^=|\\.\\^=|%=|\\|=|&amp;=|\\$=|&lt;&lt;=|&gt;&gt;=)",
+          "name": "keyword.operator.update.brian"
+        },
+        {
+          "match": "(?:::(?:(?:Union)?\\([^)]*\\)|\\w+(?:{[^}]*})?))(?:\\.\\.\\.)?",
+          "name": "support.type.brian"
+        },
+        {
+          "match": "(?:\\?|:)",
+          "name": "keyword.operator.ternary.brian"
+        },
+        {
+          "match": "(?:\\|\\||&&|!)",
+          "name": "keyword.operator.boolean.brian"
+        },
+        {
+          "match": "(?:->|<-|-->)",
+          "name": "keyword.operator.arrow.brian"
+        },
+        {
+          "match": "(?:>|<|>=|<=|==|!=|\\.>|\\.\\<|\\.>=|\\.>=|\\.==|\\.!=|\\.=|\\.!|<:|:>)",
+          "name": "keyword.operator.relation.brian"
+        },
+        {
+          "match": "(?::)",
+          "name": "keyword.operator.range.brian"
+        },
+        {
+          "match": "(?:<<|>>)",
+          "name": "keyword.operator.shift.brian"
+        },
+        {
+          "match": "(?:\\||&amp;|~)",
+          "name": "keyword.operator.bitwise.brian"
+        },
+        {
+          "match": "(?:\\+|-|\\*|\\.\\*|/|\\./|//|\\.//|%|\\.\\%|\\\\|\\.\\\\|\\^|\\.\\^)",
+          "name": "keyword.operator.arithmetic.brian"
+        },
+        {
+          "match": "(?:::)",
+          "name": "keyword.operator.isa.brian"
+        },
+        {
+          "match": "(?:\\.(?=[a-zA-Z])|\\.\\.+)",
+          "name": "keyword.operator.dots.brian"
+        },
+        {
+          "match": "(?:\\$(?=.+))",
+          "name": "keyword.operator.interpolation.brian"
+        },
+        {
+          "captures": {
+            "2": {
+              "name": "keyword.operator.transposed-variable.brian"
+            }
           },
-          {
-            "name": "comment.block.brian",
-            "begin": "\\/\\*",
-            "end": "\\*\\/"
-          }
-        ]
-      },
-      "equation": {
-        "patterns": [
-          {
-            "name": "differential.equation.brian",
-            "match": "\\b(d\\/dt)\\b"
+          "match": "(\\w+)(('|(\\.'))*\\.?')"
+        },
+        {
+          "captures": {
+            "1": {
+              "name": "keyword.bracket.end.brian"
+            },
+            "2": {
+              "name": "keyword.operator.transposed-matrix.brian"
+            }
           },
-          {
-            "name": "variable.equation.brian",
-            "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\b"
+          "match": "(\\])((?:'|(?:\\.'))*\\.?')"
+        },
+        {
+          "captures": {
+            "1": {
+              "name": "keyword.bracket.end.brian"
+            },
+            "2": {
+              "name": "keyword.operator.transposed-parens.brian"
+            }
           },
-          {
-            "name": "operator.equation.brian",
-            "match": "[-+*/%<>^=!:]+"
-          }
-        ]
-      },
-      "constant": {
-        "patterns": [
-          {
-            "name": "constant.numeric.brian",
-            "match": "\\b\\d+(\\.\\d+)?\\b"
-          },
-          {
-            "name": "constant.character.brian",
-            "match": "\\b\\w\\b"
-          },
-          {
-            "name": "constant.language.brian",
-            "match": "\\b(true|false|null)\\b"
-          },
-          {
-            "name": "constant.other.brian",
-            "match": "\\b\\w+\\b"
-          }
-        ]
-      }
+          "match": "(\\))((?:'|(?:\\.'))*\\.?')"
+        }
+      ]
     }
   }
+}

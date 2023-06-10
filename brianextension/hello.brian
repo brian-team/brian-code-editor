@@ -3,8 +3,11 @@
 Multi Line Comment
 */
 {hhe}
-eqs = '''
+eqs =
 dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
 dge/dt = -ge/taue : volt
 dgi/dt = -gi/taui : volt
-'''
+v(0) = El
+
+# Neuron Group
+P = NeuronGroup(4000, eqs, threshold='v>-50*mV', reset='v=El', refractory=5*ms, method='euler')

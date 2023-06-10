@@ -31,6 +31,11 @@
           "name": "keyword.equation_after_colon.brian",
           "begin": ":\\s*",
           "end": "$"
+        },
+        {
+          "name":"keyword.equation_before_equal.brian",
+          "begin": "(?<=^|\\n)\\s*(?=.*:\\s*volt)",
+          "end": "="
         }
       ]
     },

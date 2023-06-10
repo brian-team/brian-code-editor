@@ -3,12 +3,30 @@
 Multi Line Comment
 */
 
-eqs =
+eqs = Hello(func(3) : jjj + 2
+dv/dt = (ge+gi-(v-El))/taum : volt (unless refractory) # Hello World
 dv/dt  = (ge+gi-(v-El))/taum : volt (unless refractory)
 dge/dt = -ge/taue : volt
 dgi/dt = -gi/taui : volt
 v(0) = El :hhelo
 l = q + 1 : hello world
+dgooogg = 1 : hello world
 
 # Neuron Group
-P = NeuronGroup(4000, eqs, threshold='v>-50*mV', reset='v=El', refractory=5*ms, method='euler')
+method='euler')
+
+# Explicit argument to the NeuronGroup
+G = NeuronGroup(1, dv/dt = -v / tau : 1', namespace={'tau': 10*ms})
+net = Network(G)
+net.run(10*ms)
+
+# Explicit argument to the run function
+G = NeuronGroup(1, 'dv/dt = -v / tau : 1')
+net = Network(G)
+net.run(10*ms, namespace={'tau': 10*ms})
+
+# Implicit namespace from the context
+G = NeuronGroup(1, 'dv/dt = -v / tau : 1')
+net = Network(G)
+tau = 10*ms
+net.run(10*ms)

@@ -30,12 +30,39 @@
         {
           "name": "keyword.equation_after_colon.brian",
           "begin": ":\\s*",
-          "end": "$"
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#equation"
+            },
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#constant"
+            },
+            {
+              "include": "#variableName"
+            },
+            {
+              "include": "#bracket"
+            },
+            {
+              "include": "#operator"
+            }
+          ]
+
         },
         {
-          "name":"keyword.equation_before_equal.brian",
-          "begin": "(?<=^|\\n)\\s*(?=.*:\\s*volt)",
-          "end": "="
+          "name": "variable.equation.brian",
+          "begin": "\\bd",
+          "end":"/dt\\b",
+          "patterns": [
+            {
+              "name": "keyword.variable_name.brian",
+              "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+            }
+          ]
         }
       ]
     },
@@ -62,7 +89,7 @@
     "bracket": {
       "patterns": [
         {
-          "name": "bracket.bracket.brian",
+          "name": "bracket.brian",
           "match": "[\\[\\](){}]"
         }
       ]
@@ -77,92 +104,6 @@
           "name": "comment.block.brian",
           "begin": "\\/\\*",
           "end": "\\*\\/"
-        }
-      ]
-    },
-    "operator": {
-      "patterns": [
-        {
-          "match": "(?:=|:=|\\+=|-=|\\*=|/=|//=|\\.//=|\\.\\*=|\\\\=|\\.\\\\=|^=|\\.\\^=|%=|\\|=|&amp;=|\\$=|&lt;&lt;=|&gt;&gt;=)",
-          "name": "keyword.operator.update.brian"
-        },
-        {
-          "match": "(?:::(?:(?:Union)?\\([^)]*\\)|\\w+(?:{[^}]*})?))(?:\\.\\.\\.)?",
-          "name": "support.type.brian"
-        },
-        {
-          "match": "(?:\\?|:)",
-          "name": "keyword.operator.ternary.brian"
-        },
-        {
-          "match": "(?:\\|\\||&&|!)",
-          "name": "keyword.operator.boolean.brian"
-        },
-        {
-          "match": "(?:->|<-|-->)",
-          "name": "keyword.operator.arrow.brian"
-        },
-        {
-          "match": "(?:>|<|>=|<=|==|!=|\\.>|\\.\\<|\\.>=|\\.>=|\\.==|\\.!=|\\.=|\\.!|<:|:>)",
-          "name": "keyword.operator.relation.brian"
-        },
-        {
-          "match": "(?::)",
-          "name": "keyword.operator.range.brian"
-        },
-        {
-          "match": "(?:<<|>>)",
-          "name": "keyword.operator.shift.brian"
-        },
-        {
-          "match": "(?:\\||&amp;|~)",
-          "name": "keyword.operator.bitwise.brian"
-        },
-        {
-          "match": "(?:\\+|-|\\*|\\.\\*|/|\\./|//|\\.//|%|\\.\\%|\\\\|\\.\\\\|\\^|\\.\\^)",
-          "name": "keyword.operator.arithmetic.brian"
-        },
-        {
-          "match": "(?:::)",
-          "name": "keyword.operator.isa.brian"
-        },
-        {
-          "match": "(?:\\.(?=[a-zA-Z])|\\.\\.+)",
-          "name": "keyword.operator.dots.brian"
-        },
-        {
-          "match": "(?:\\$(?=.+))",
-          "name": "keyword.operator.interpolation.brian"
-        },
-        {
-          "captures": {
-            "2": {
-              "name": "keyword.operator.transposed-variable.brian"
-            }
-          },
-          "match": "(\\w+)(('|(\\.'))*\\.?')"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "keyword.bracket.end.brian"
-            },
-            "2": {
-              "name": "keyword.operator.transposed-matrix.brian"
-            }
-          },
-          "match": "(\\])((?:'|(?:\\.'))*\\.?')"
-        },
-        {
-          "captures": {
-            "1": {
-              "name": "keyword.bracket.end.brian"
-            },
-            "2": {
-              "name": "keyword.operator.transposed-parens.brian"
-            }
-          },
-          "match": "(\\))((?:'|(?:\\.'))*\\.?')"
         }
       ]
     }

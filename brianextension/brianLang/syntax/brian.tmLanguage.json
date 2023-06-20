@@ -112,7 +112,7 @@
           "match": "\\b(true|false|null)\\b"
         },
         {
-          "name": "keyword.unit.brian",
+          "name": "variable.equation.brian",
           "match": "\\b\\w+\\b"
         }
       ]

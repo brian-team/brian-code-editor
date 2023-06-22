@@ -40,6 +40,9 @@
             },
             {
               "include": "#operator"
+            },
+            {
+              "include": "#comments"
             }
           ]
 
@@ -51,6 +54,9 @@
           "patterns": [
             {
               "include": "#constant"
+            },
+            {
+              "include": "#comments"
             },
             {
               "include": "#variable"
@@ -79,6 +85,9 @@
             {
               "name":"keyword.flag.brian",
               "match": "\\b((\\w+))\\b"
+            },
+            {
+              "include": "#comments"
             }
           ]
         }
@@ -124,7 +133,7 @@
           "match": "[\\(\\)]"
         },
         {
-          "name": "bracket.illegal.brian",
+          "name": "invalid.illegal.bracket.brian",
           "match": "[\\[\\]{}]"
         }
       ]

@@ -9,72 +9,162 @@
       "include": "#comments"
     },
     {
-      "include": "#equation"
+      "include": "#constants"
     },
     {
-      "include": "#constant"
+      "include": "#variable_definition"
     },
     {
-      "include": "#variable"
-    },
-
-    {
-      "include": "#bracket"
+      "include": "#after_colon"
     },
     {
-      "include": "#operator"
+      "include": "#equation_rhs"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#brackets"
+    },
+    {
+      "include": "#functions"
     }
   ],
   "repository": {
-    "equation": {
+    "comments": {
       "patterns": [
-
+        {
+          "begin": "#",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.brian"
+            }
+          },
+          "end": "\\n",
+          "name": "comment.line.number-sign.brian"
+        },
+        {
+          "begin": "\\/\\*",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.brian"
+            }
+          },
+          "end": "\\*\\/",
+          "name": "comment.block.brian"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "match": "\\b(?i:(0x\\h*)L)",
+          "name": "constant.numeric.integer.long.hexadecimal.brian"
+        },
+        {
+          "match": "\\b(?i:(0x\\h*))",
+          "name": "constant.numeric.integer.hexadecimal.brian"
+        },
+        {
+          "match": "\\b(?i:(0o?[0-7]+)L)",
+          "name": "constant.numeric.integer.long.octal.brian"
+        },
+        {
+          "match": "\\b(?i:(0o?[0-7]+))",
+          "name": "constant.numeric.integer.octal.brian"
+        },
+        {
+          "match": "\\b(?i:(0b[01]+)L)",
+          "name": "constant.numeric.integer.long.binary.brian"
+        },
+        {
+          "match": "\\b(?i:(0b[01]+))",
+          "name": "constant.numeric.integer.binary.brian"
+        },
+        {
+          "match": "\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)",
+          "name": "constant.numeric.complex.brian"
+        },
+        {
+          "match": "\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])",
+          "name": "constant.numeric.float.brian"
+        },
+        {
+          "match": "(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))",
+          "name": "constant.numeric.float.brian"
+        },
+        {
+          "match": "\\b(?i:(\\d+e[\\-\\+]?\\d+))",
+          "name": "constant.numeric.float.brian"
+        },
+        {
+          "match": "\\b(?i:([1-9]+[0-9]*|0)L)",
+          "name": "constant.numeric.integer.long.decimal.brian"
+        },
+        {
+          "match": "\\b([1-9]+[0-9]*|0)",
+          "name": "constant.numeric.integer.decimal.brian"
+        }
+      ]
+    },
+    "equation":{
+      "patterns":[
+        {
+          "include": "#variable_definition"
+        },
+        {
+          "include": "#equation_rhs"
+        },
+        {
+          "include": "#after_colon"
+        }
+      ]
+    },
+    "variable_definition": {
+      "patterns": [
         {
           "name": "meta.variable_definition.brian",
           "begin": "\\bd",
-          "end":"dt\\b",
+          "end": "dt\\b",
           "patterns": [
             {
               "name": "variable.equation.brian",
               "match": "[a-zA-Z_][a-zA-Z0-9_]*"
             },
             {
-              "include": "#operator"
-            },
-            {
-              "include": "#comments"
-            }
-          ]
-
-        },
-        {
-          "name":"meta.equation_rhs.brian",
-          "begin": "(?<=\\=\\s*)",
-          "end": "$",
-          "patterns": [
-            {
-              "include": "#constant"
-            },
-            {
-              "include": "#comments"
-            },
-            {
-              "include": "#variable"
-            },
-            {
-              "include": "#operator"
-            },
-            {
-              "include": "#bracket"
-            },
-            {
-              "include": "#meta.after_colon.brian"
+              "name": "operator.differential.brian",
+              "match": "\\/"
             }
           ]
         }
       ]
     },
-    "meta.after_colon.brian":{
+    "equation_rhs":{
+      "name":"meta.equation_rhs.brian",
+          "begin": "(?<=\\=\\s*)",
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#"
+            },
+            {
+              "include": "#"
+            },
+            {
+              "include": "#"
+            },
+            {
+              "include": "#"
+            },
+            {
+              "include": "#"
+            },
+            {
+              "include": "#"
+            }
+          ]
+    },
+    "after_colon":{
       "patterns": [
         {
           "name": "meta.after_colon.brian",
@@ -87,59 +177,50 @@
               "match": "\\b((\\w+))\\b"
             },
             {
-              "include": "#comments"
+              "include": "#"
             },
             {
-              "include": "#variable"
+              "include": "#"
             },
             {
-              "include": "#operator"
+              "include": "#"
             },
             {
-              "include": "#bracket"
+              "include": "#"
             }
           ]
         }
       ]
     },
-    "operator":{
+    "operators": {
       "patterns": [
         {
-        "name":"operator.assignment.brian",
-        "match": "\\="
+          "match": "<\\=|>\\=|\\=\\=|<|>|\\!\\=",
+          "name": "keyword.operator.comparison.brian"
         },
         {
-        "name":"operator.differential.brian",
-        "match": "\\/"
+          "match": "\\+\\=|-\\=|\\*\\=|/\\=|//\\=|%\\=|&\\=|\\|\\=|\\^\\=|>>\\=|<<\\=|\\*\\*\\=",
+          "name": "keyword.operator.assignment.augmented.brian"
+        },
+        {
+          "match": "\\+|\\-|\\*|\\*\\*|/|//|%|<<|>>|&|\\||\\^|~",
+          "name": "keyword.operator.arithmetic.brian"
+        },
+        {
+          "match": "\\=",
+          "name": "keyword.operator.assignment.brian"
         }
       ]
     },
-
-    "constant": {
+    "brackets": {
       "patterns": [
         {
-          "name": "constant.numeric.brian",
-          "match": "\\b\\d+(\\.\\d+)?\\b"
+          "name": "punctuation.parenthesis.begin.python",
+          "match": "[\\(]"
         },
         {
-          "name": "constant.character.brian",
-          "match":"\\b\\w\\b"
-        },
-        {
-          "name": "constant.language.brian",
-          "match": "\\b(true|false|null)\\b"
-        },
-        {
-          "name": "variable.equation.brian",
-          "match": "\\b\\w+\\b"
-        }
-      ]
-    },
-    "bracket": {
-      "patterns": [
-        {
-          "name": "bracket.brian",
-          "match": "[\\(\\)]"
+          "name":"punctuation.parenthesis.end.python",
+          "match": "[\\)]"
         },
         {
           "name": "invalid.illegal.bracket.brian",
@@ -147,27 +228,9 @@
         }
       ]
     },
-    "comments": {
-      "patterns": [
-        {
-          "name": "comment.line.brian",
-          "match": "#.*$"
-        },
-        {
-          "name": "comment.block.brian",
-          "begin": "\\/\\*",
-          "end": "\\*\\/"
-        }
-      ]
-    },
-    "function":{
-      "patterns":[
-        {
-          "name": "support.function-call.brian",
-          "begin": "\\exp\\(",
-          "end": "\\)"
-        }
-      ]
+    "functions":{
+      "name":"mata.function-call.brian",
+      "match":"\\b(exp|exprel)\\b"
     }
   }
 }

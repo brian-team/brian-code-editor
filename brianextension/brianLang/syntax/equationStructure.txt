@@ -1,0 +1,9 @@
+Content of Brian File (not i detail)
+
+Equations
+comments
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+My Questions
+1. Does we need to create a UUID, First Line Match for Brian
+2.

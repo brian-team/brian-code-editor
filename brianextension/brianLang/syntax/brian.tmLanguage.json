@@ -88,6 +88,15 @@
             },
             {
               "include": "#comments"
+            },
+            {
+              "include": "#variable"
+            },
+            {
+              "include": "#operator"
+            },
+            {
+              "include": "#bracket"
             }
           ]
         }
@@ -148,6 +157,15 @@
           "name": "comment.block.brian",
           "begin": "\\/\\*",
           "end": "\\*\\/"
+        }
+      ]
+    },
+    "function":{
+      "patterns":[
+        {
+          "name": "support.function-call.brian",
+          "begin": "\\exp\\(",
+          "end": "\\)"
         }
       ]
     }

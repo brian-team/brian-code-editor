@@ -3,7 +3,6 @@
   "name": "Brian",
   "scopeName": "source.brian",
   "fileTypes": ["brian"],
-
   "patterns": [
     {
       "include": "#comments"
@@ -28,6 +27,9 @@
     },
     {
       "include": "#functions"
+    },
+    {
+      "include":"#units"
     }
   ],
   "repository": {
@@ -107,8 +109,8 @@
         }
       ]
     },
-    "equation":{
-      "patterns":[
+    "equation": {
+      "patterns": [
         {
           "include": "#variable_definition"
         },
@@ -139,54 +141,78 @@
         }
       ]
     },
-    "equation_rhs":{
-      "name":"meta.equation_rhs.brian",
-          "begin": "(?<=\\=\\s*)",
-          "end": "$",
-          "patterns": [
-            {
-              "include": "#"
-            },
-            {
-              "include": "#"
-            },
-            {
-              "include": "#"
-            },
-            {
-              "include": "#"
-            },
-            {
-              "include": "#"
-            },
-            {
-              "include": "#"
-            }
-          ]
+    "equation_rhs": {
+      "name": "meta.equation_rhs.brian",
+      "begin": "(?<=\\=\\s*)",
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#"
+        },
+        {
+          "include": "#"
+        },
+        {
+          "include": "#"
+        },
+        {
+          "include": "#"
+        },
+        {
+          "include": "#"
+        },
+        {
+          "include": "#"
+        }
+      ]
     },
-    "after_colon":{
+    "after_colon": {
       "patterns": [
         {
           "name": "meta.after_colon.brian",
           "begin": ":\\s*",
           "end": "$",
           "patterns": [
-
             {
-              "name":"keyword.flag.brian",
-              "match": "\\b((\\w+))\\b"
+              "include": "#comments"
             },
             {
-              "include": "#"
+              "include": "#operators"
             },
             {
-              "include": "#"
+              "include": "#constants"
             },
             {
-              "include": "#"
+              "include": "#units"
             },
             {
-              "include": "#"
+              "name":"mate.flag.brian",
+              "begin": "\\(\\s*",
+              "beginCaptures": {
+                "0": {
+                  "name": "flag.punctuation.parenthesis.begin.brian"
+                }
+              },
+              "patterns":[
+                  {
+                    "name":"flag.keyword.brian",
+                    "match": "\\s*([^,\\s)(]+)\\s*,\\s*([^,\\s)(]+)\\s*",
+                    "captures": {
+                      "1": {
+                        "name": "flag1"
+                      },
+                      "2": {
+                        "name": "flag2"
+                      }
+                    }
+                  }
+              ],
+              "end": "\\s*\\)",
+              "endCaptures": {
+                "0": {
+                  "name": "flag.punctuation.parenthesis.end.brian"
+                }
+              }
             }
           ]
         }
@@ -219,7 +245,7 @@
           "match": "[\\(]"
         },
         {
-          "name":"punctuation.parenthesis.end.python",
+          "name": "punctuation.parenthesis.end.python",
           "match": "[\\)]"
         },
         {
@@ -228,9 +254,13 @@
         }
       ]
     },
-    "functions":{
-      "name":"mata.function-call.brian",
-      "match":"\\b(exp|exprel)\\b"
+    "functions": {
+      "name": "mata.function-call.brian",
+      "match": "\\b(exp|exprel)\\b"
+    },
+    "units":{
+      "name": "meta.units.brian",
+      "match":"\\b(amp|ampere|kilogram|kilogramme|second|metre|meter|mole|mol| kelvin|candela|coulomb|farad|gram|gramme|hertz|joule|liter|litre|molar| pascal | ohm|siemens|volt|watt|cmetre|cmeter|cm | nS|ms| Hz| mM|mV |nS)\\b"
     }
   }
 }

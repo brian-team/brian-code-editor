@@ -6,4 +6,12 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 
 My Questions
 1. Does we need to create a UUID, First Line Match for Brian
-2.
+2. In Exp or Exprel, do we need to make it more detailed like defining parenthesis after exp or exprel and
+3. How many max flags there can be - https://brian2.readthedocs.io/en/stable/user/equations.html#flags
+4. Defining Units
+"units":{
+      "name": "meta.units.brian",
+      "match":"\\b(amp|ampere|kilogram|kilogramme|second|metre|meter|mole|mol| kelvin|candela|coulomb|farad|gram|gramme|hertz|joule|liter|litre|molar| pascal | ohm|siemens|volt|watt|cmetre|cmeter|cm | nS|ms| Hz| mM|mV |nS)\\b"
+    }
+
+5. Should we also define illegal wrt each part of equations like use of # in dv#/dt

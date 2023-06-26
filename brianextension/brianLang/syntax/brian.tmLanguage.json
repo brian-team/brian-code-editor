@@ -258,7 +258,7 @@
               "include": "#units"
             },
             {
-              "name": "mate.flag.brian",
+              "name": "meta.flag.brian",
               "begin": "\\(\\s*",
               "beginCaptures": {
                 "0": {
@@ -267,16 +267,8 @@
               },
               "patterns": [
                 {
-                  "name": "flag.keyword.brian",
-                  "match": "\\s*([^,\\s)(]+)\\s*,\\s*([^,\\s)(]+)\\s*",
-                  "captures": {
-                    "1": {
-                      "name": "flag1"
-                    },
-                    "2": {
-                      "name": "flag2"
-                    }
-                  }
+                  "name": "keyword.other.flag.brian",
+                  "match": "\\s*([^,\\s)(]+)\\s*(,\\s*([^,\\s)(]+)\\s*)*"
                 }
               ],
               "end": "\\s*\\)",

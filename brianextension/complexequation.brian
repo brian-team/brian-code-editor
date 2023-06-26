@@ -1,15 +1,14 @@
- # j
-#
+   # j
 /* 2-compartment Hodgkin-Huxley model */
 */
-dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-g_na*(m*m*m)*h*(v-ENa)-g_kd*(n*n*n*n)*(v-EK))/Cm : volt
+dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-vx)-g_na*(m*m*m)*h*(v-ENa)-g_kd*(n*n*n*n)*(v-EK))/Cm : volt
 
 dm/dt = alpha_m*(1-m)-beta_m*m : 1
-dn/dt = alpha_n*(1-n)-beta_n*n : 1
-dh/dt = alpha_h*(1-h)-beta_h*h : 1 (helo) # hhh
+dn/dt = alpha_n*(1-n)-beta_n*n : 1  # hello
+ dh/dt = alpha_h*(1-h)-beta_h*h : 1 (helo) # hhh
 dge/dt = -ge*(1./taue) : siemens (helo)
 para : 1 ( helloo)
-dgi/dt = -gi*(1./taui) : siemens ( constat1 , const) /* ii*/ #jjj /* jjj*/
+dgi/dt = -gi*(1./taui) : siemens 1/kilogram ( constat1 , const   ) /* ii*/ #jjj /* jjj*/
 dge/dt = -ge*(1./taue) : siemens
 dgi/dt  = -gi*(1./taui) : siemens # hello
 alpha_m = 0.32*(mV**-1)*4*mV/exprel((13*mV-v+VT)/(4*mV))/ms : Hz

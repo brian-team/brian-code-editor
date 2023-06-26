@@ -11,15 +11,6 @@
       "include": "#constants"
     },
     {
-      "include": "#variable_definition"
-    },
-    {
-      "include": "#after_colon"
-    },
-    {
-      "include": "#equation_rhs"
-    },
-    {
       "include": "#operators"
     },
     {
@@ -29,7 +20,10 @@
       "include": "#functions"
     },
     {
-      "include":"#units"
+      "include": "#units"
+    },
+    {
+      "include": "#equation"
     }
   ],
   "repository": {
@@ -110,15 +104,86 @@
       ]
     },
     "equation": {
+      "name": "meta.equations.brian",
+      "begin": "^\\s*",
       "patterns": [
         {
-          "include": "#variable_definition"
+          "include": "#equations_lhs"
         },
         {
           "include": "#equation_rhs"
         },
         {
           "include": "#after_colon"
+        },
+        {
+          "include": "#comments"
+        },
+        {
+          "include": "#constants"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#brackets"
+        },
+        {
+          "include": "#functions"
+        },
+        {
+          "include": "#units"
+        },
+        {
+          "name": "meta.variable_definition.brian",
+          "begin": "(\\s*\\bd)(?=[a-zA-Z_]*/dt\\b)",
+          "end": "dt\\b",
+          "patterns": [
+            {
+              "name": "meta.variable.variable_definition.brian",
+              "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+            },
+            {
+              "name": "operator.differential.brian",
+              "match": "\\/"
+            }
+          ]
+        }
+      ],
+      "end": "$"
+    },
+    "equations_lhs": {
+      "name": "meta.equations_lhs.brian",
+      "begin": "^(?=\\s*[^\\s])",
+      "end": "(?=[\\=|\\:])",
+      "patterns": [
+        {
+          "include": "#variable_definition"
+        },
+        {
+          "name": "meta.equation.lhs.variable.brian",
+          "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#brackets"
+        },
+        {
+          "include": "#functions"
+        },
+        {
+          "include": "#constants"
+        },
+        {
+          "include": "#units"
+        },
+        {
+          "include": "#comments"
+        },
+        {
+          "inclide":"#after_colon"
         }
       ]
     },
@@ -126,11 +191,11 @@
       "patterns": [
         {
           "name": "meta.variable_definition.brian",
-          "begin": "\\bd",
+          "begin": "(\\s*\\bd)(?=[a-zA-Z_]*/dt\\b)",
           "end": "dt\\b",
           "patterns": [
             {
-              "name": "variable.equation.brian",
+              "name": "meta.variable.variable_definition.brian",
               "match": "[a-zA-Z_][a-zA-Z0-9_]*"
             },
             {
@@ -147,22 +212,29 @@
       "end": "$",
       "patterns": [
         {
-          "include": "#"
+          "include": "#operators"
         },
         {
-          "include": "#"
+          "include": "#brackets"
         },
         {
-          "include": "#"
+          "include": "#functions"
         },
         {
-          "include": "#"
+          "include": "#constants"
         },
         {
-          "include": "#"
+          "include": "#units"
         },
         {
-          "include": "#"
+          "include": "#comments"
+        },
+        {
+          "name": "mata.equation.rhs.constant.brian",
+          "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+        },
+        {
+          "include": "#after_colon"
         }
       ]
     },
@@ -186,26 +258,26 @@
               "include": "#units"
             },
             {
-              "name":"mate.flag.brian",
+              "name": "mate.flag.brian",
               "begin": "\\(\\s*",
               "beginCaptures": {
                 "0": {
                   "name": "flag.punctuation.parenthesis.begin.brian"
                 }
               },
-              "patterns":[
-                  {
-                    "name":"flag.keyword.brian",
-                    "match": "\\s*([^,\\s)(]+)\\s*,\\s*([^,\\s)(]+)\\s*",
-                    "captures": {
-                      "1": {
-                        "name": "flag1"
-                      },
-                      "2": {
-                        "name": "flag2"
-                      }
+              "patterns": [
+                {
+                  "name": "flag.keyword.brian",
+                  "match": "\\s*([^,\\s)(]+)\\s*,\\s*([^,\\s)(]+)\\s*",
+                  "captures": {
+                    "1": {
+                      "name": "flag1"
+                    },
+                    "2": {
+                      "name": "flag2"
                     }
                   }
+                }
               ],
               "end": "\\s*\\)",
               "endCaptures": {
@@ -258,9 +330,9 @@
       "name": "mata.function-call.brian",
       "match": "\\b(exp|exprel)\\b"
     },
-    "units":{
+    "units": {
       "name": "meta.units.brian",
-      "match":"\\b(amp|ampere|kilogram|kilogramme|second|metre|meter|mole|mol| kelvin|candela|coulomb|farad|gram|gramme|hertz|joule|liter|litre|molar| pascal | ohm|siemens|volt|watt|cmetre|cmeter|cm | nS|ms| Hz| mM|mV |nS)\\b"
+      "match": "\\b(amp|ampere|kilogram|kilogramme|second|metre|meter|mole|mol| kelvin|candela|coulomb|farad|gram|gramme|hertz|joule|liter|litre|molar| pascal | ohm|siemens|volt|watt|cmetre|cmeter|cm | nS|ms| Hz| mM|mV |nS)\\b"
     }
   }
 }

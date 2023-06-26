@@ -140,7 +140,7 @@
           "end": "dt\\b",
           "patterns": [
             {
-              "name": "meta.variable.variable_definition.brian",
+              "name": "variable.other.equation.brian",
               "match": "[a-zA-Z_][a-zA-Z0-9_]*"
             },
             {
@@ -161,7 +161,7 @@
           "include": "#variable_definition"
         },
         {
-          "name": "meta.equation.lhs.variable.brian",
+          "name": "variable.other.equation.brian",
           "match": "[a-zA-Z_][a-zA-Z0-9_]*"
         },
         {
@@ -195,7 +195,7 @@
           "end": "dt\\b",
           "patterns": [
             {
-              "name": "meta.variable.variable_definition.brian",
+              "name": "variable.other.equation.brian",
               "match": "[a-zA-Z_][a-zA-Z0-9_]*"
             },
             {
@@ -230,7 +230,7 @@
           "include": "#comments"
         },
         {
-          "name": "mata.equation.rhs.constant.brian",
+          "name": "constant.other.brian",
           "match": "[a-zA-Z_][a-zA-Z0-9_]*"
         },
         {

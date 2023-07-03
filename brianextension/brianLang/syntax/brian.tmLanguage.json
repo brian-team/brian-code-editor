@@ -305,11 +305,11 @@
     "brackets": {
       "patterns": [
         {
-          "name": "punctuation.parenthesis.begin.python",
+          "name": "punctuation.parenthesis.begin.brian",
           "match": "[\\(]"
         },
         {
-          "name": "punctuation.parenthesis.end.python",
+          "name": "punctuation.parenthesis.end.brian",
           "match": "[\\)]"
         },
         {

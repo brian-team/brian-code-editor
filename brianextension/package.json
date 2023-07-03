@@ -38,6 +38,11 @@
         "language": "brian",
         "scopeName": "source.brian",
         "path": "./brianLang/syntax/brian.tmLanguage.json"
+      },
+      {
+        "injectTo": ["source.python"],
+        "scopeName": "brian.injection",
+        "path": "./brianLang/syntax/brian.injection.json"
       }
     ],
 

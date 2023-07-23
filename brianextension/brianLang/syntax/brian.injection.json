@@ -3,19 +3,45 @@
   "injectionSelector": "L:meta.function-call.python",
   "patterns": [
     {
-      "include": "#injection"
+      "include": "#injection1"
+    },
+    {
+      "include": "#injection2"
+    },
+    {
+      "include": "#injection3"
     }
   ],
   "repository": {
-    "injection": {
+    "injection1": {
       "name": "meta.function-call.brian",
-      "begin": "\\bEquations\\('''\\s*",
-      "patterns":[
+      "begin": "\\bEquations\\(\\s*'''\\s*",
+      "patterns": [
         {
           "include": "source.brian"
         }
       ],
-      "end": "\\'''\\)"
+      "end": "'''\\)"
+    },
+    "injection2": {
+      "name": "meta.function-call.brian",
+      "begin": "\\bEquations\\(\\s*'\\s*",
+      "patterns": [
+        {
+          "include": "source.brian"
+        }
+      ],
+      "end": "'\\)"
+    },
+    "injection3": {
+      "name": "meta.function-call.brian",
+      "begin": "\\bEquations\\(\\s*\"\\s*",
+      "patterns": [
+        {
+          "include": "source.brian"
+        }
+      ],
+      "end": "\"\\s*\\)"
     }
   }
 }

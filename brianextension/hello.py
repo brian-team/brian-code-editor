@@ -21,8 +21,7 @@ we = 6*nS  # excitatory synaptic weight
 wi = 67*nS  # inhibitory synaptic weight
 
 # The model
-eqs = Equations('''
-dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-
+eqs = Equations('''dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-
          g_na*(m*m*m)*h*(v-ENa)-
          g_kd*(n*n*n*n)*(v-EK))/Cm : volt
 dm/dt = alpha_m*(1-m)-beta_m*m : 1

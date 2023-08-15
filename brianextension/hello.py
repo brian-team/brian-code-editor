@@ -22,7 +22,7 @@ wi = 67*nS  # inhibitory synaptic weight
 
 # The model
 eqs = Equations('''
-
+                n
 dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-
          g_na*(m*m*m)*h*(v-ENa)-
          g_kd*(n*n*n*n)*(v-EK))/Cm : volt
@@ -37,6 +37,7 @@ alpha_h = 0.128*exp((17*mV-v+VT)/(18*mV))/ms : Hz
 beta_h = 4./(1+exp((40*mV-v+VT)/(5*mV)))/ms : Hz
 alpha_n = 0.032*(mV**-1)*5*mV/exprel((15*mV-v+VT)/(5*mV))/ms : Hz
 beta_n = .5*exp((10*mV-v+VT)/(40*mV))/ms : Hz
+                []
 ''')
 
 P = NeuronGroup(4000, model=eqs, threshold='v>-20*mV', refractory=3*ms,

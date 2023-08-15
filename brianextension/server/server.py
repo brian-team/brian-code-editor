@@ -44,12 +44,38 @@ brian_server = BrianLanguageServer("pygls-brian-example", "v0.1")
 )
 def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
-    from brian2.core.functions import DEFAULT_FUNCTIONS, DEFAULT_CONSTANTS
+    from brian2.core.functions import DEFAULT_CONSTANTS, DEFAULT_FUNCTIONS
     constants = [CompletionItem(label=c, kind=CompletionItemKind.Constant)
                     for c in DEFAULT_CONSTANTS]
     functions = [CompletionItem(label=f, kind=CompletionItemKind.Function)
                     for f in DEFAULT_FUNCTIONS]
+
+    from brian2.units.allunits import __all__ as ALL_UNITS
+    units = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                    for u in ALL_UNITS]
+
+
+
     return CompletionList(
         is_incomplete=False,
-        items=constants + functions,
+        items=constants + functions+units,
+    )
+
+def definition(params: Optional[CompletionParams] = None) -> CompletionList:
+    """Returns completion items."""
+    from brian2.core.functions import DEFAULT_CONSTANTS, DEFAULT_FUNCTIONS
+    constants = [CompletionItem(label=c, kind=CompletionItemKind.Constant)
+                    for c in DEFAULT_CONSTANTS]
+    functions = [CompletionItem(label=f, kind=CompletionItemKind.Function)
+                    for f in DEFAULT_FUNCTIONS]
+
+    from brian2.units.allunits import __all__ as ALL_UNITS
+    units = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                    for u in ALL_UNITS]
+
+
+
+    return CompletionList(
+        is_incomplete=False,
+        items=constants + functions+units,
     )

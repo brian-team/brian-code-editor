@@ -16,38 +16,47 @@
     "Data Science", "Machine Learning", "Programming Languages"
   ],
   "activationEvents": [
-    "onLanguage:python"
+    "onLanguage:python",
+    "onLanguage:brian"
   ],
   "main": "./client/out/extension",
   "contributes": {
-
-    "languages": [
-      {
-        "id": "brian",
-        "extensions": [
-          ".brian"
-        ],
-        "aliases": [
-          "Brian"
-        ],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "brian",
-        "scopeName": "source.brian",
-        "path": "./brianLang/syntax/brian.tmLanguage.json"
-      },
-      {
-        "injectTo": ["source.python"],
-        "scopeName": "brian.injection",
-        "path": "./brianLang/syntax/brian.injection.json"
-      }
-    ],
-    "hoverProvider": true
-
+  "languages": [
+    {
+      "id": "brian",
+      "extensions": [
+        ".brian"
+      ],
+      "aliases": [
+        "Brian"
+      ],
+      "configuration": "./language-configuration.json"
+    }
+  ],
+  "grammars": [
+    {
+      "language": "brian",
+      "scopeName": "source.brian",
+      "path": "./brianLang/syntax/brian.tmLanguage.json"
+    },
+    {
+      "injectTo": ["source.python"],
+      "scopeName": "brian.injection",
+      "path": "./brianLang/syntax/brian.injection.json"
+    }
+  ],
+  "hoverProvider": true,
+  "completionItemProvider": {
+    "resolveProvider": true
   },
+  "completionProvider": {
+    "triggerCharacters": [
+      "."
+    ],
+    "resolveProvider": true
+  },
+  "definitionProvider": true
+},
 
 
   "scripts": {

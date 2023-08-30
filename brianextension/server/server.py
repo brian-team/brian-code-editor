@@ -30,6 +30,9 @@ from pygls.server import LanguageServer
 
 Flag_List = ['event-driven','unless refractory','constant','constant over dt','shared','linked']
 
+list_of_special_symbols = ['dt','i','j','lastspike','lastupdate','N','not_refractory','t','t_in_timesteps']
+# One is missing - xi, xi_*
+
 class BrianLanguageServer(LanguageServer):
 
     CONFIGURATION_SECTION = "jsonServer"
@@ -175,14 +178,19 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                     for u in ALL_EQUATIONS]
 
     # Flags
-    flags = [CompletionItem(label=u, kind=CompletionItemKind.flag)
+    flags = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in Flag_List]
+
+    # Special symbols
+    special_symbols = [CompletionItem(label=u, kind=CompletionItemKind.Unit) for u in list_of_special_symbols]
+
+
 
 
 
     return CompletionList(
         is_incomplete=False,
-        items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic+flags,
+        items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic+flags+special_symbols,
     )
 
 # #  Go to definition

@@ -28,6 +28,8 @@ from lsprotocol.types import (
 )
 from pygls.server import LanguageServer
 
+Flag_List = ['event-driven','unless refractory','constant','constant over dt','shared','linked']
+
 class BrianLanguageServer(LanguageServer):
 
     CONFIGURATION_SECTION = "jsonServer"
@@ -42,6 +44,9 @@ brian_server = BrianLanguageServer("pygls-brian-example", "v0.1")
 @brian_server.feature(
     TEXT_DOCUMENT_COMPLETION, CompletionOptions()
 )
+
+
+
 def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
 
@@ -169,8 +174,26 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     equations = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in ALL_EQUATIONS]
 
+    # Flags
+    flags = [CompletionItem(label=u, kind=CompletionItemKind.flag)
+                    for u in Flag_List]
+
+
 
     return CompletionList(
         is_incomplete=False,
-        items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic,
+        items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic+flags,
     )
+
+# #  Go to definition
+# @lsp_types.message('textDocument/definition')
+# def go_to_definition(params: lsp_types.TextDocumentPositionParams) -> lsp_types.Location:
+#     return lsp_types.Location(
+#         uri=params.text_document.uri,
+#         range=lsp_types.Range(
+#             start=lsp_types.Position(line=0, character=0),
+#             end=lsp_types.Position(line=0, character=0),
+#         ),
+#     )
+
+# #  Hover

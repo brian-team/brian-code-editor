@@ -11,7 +11,8 @@ ENa = 50*mV
 g_na = (100*msiemens*cm**-2) * area
 g_kd = (30*msiemens*cm**-2) * area
 VT = -63*mV
-# Time constants
+                # Time constants
+
 taue = 5*ms
 taui = 10*ms
 # Reversal potentials
@@ -22,11 +23,12 @@ wi = 67*nS  # inhibitory synaptic weight
 
 # The model
 eqs = Equations('''
-                
+
 dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-
          g_na*(m*m*m)*h*(v-ENa)-
          g_kd*(n*n*n*n)*(v-EK))/Cm : volt
 dm/dt = alpha_m*(1-m)-beta_m*m : 1
+                kslsafasz
 dn/dt = alpha_n*(1-n)-beta_n*n : 1
 dh/dt = alpha_h*(1-h)-beta_h*h : 1
 dge/dt = -ge*(1./taue) : siemens

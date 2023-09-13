@@ -66,7 +66,7 @@ We welcome contributions to the VS Code Brian Simulator Extension. If you'd like
 
 6. Create a pull request to the main repository.
 
-7. Please Follow [Contributing.md](CONTRIBUTING.MD) for more details 
+7. Please Follow [Contributing.md](/CONTRIBUTING.md) for more details 
 
 
 ## License
@@ -75,6 +75,6 @@ This extension is licensed under the `GNU GENERAL PUBLIC LICENSE Version 3, 29 J
 
 ---
 
-Thank you for using the VS Code Brian Simulator Extension! If you have any questions, encounter issues, or want to contribute, please don't hesitate to [get in touch]().
+Thank you for using the VS Code Brian Simulator Extension! If you have any questions, encounter issues, or want to contribute, please don't hesitate to [get in touch](https://brian.discourse.group/).
 
 Happy coding!

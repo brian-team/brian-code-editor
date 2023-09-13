@@ -4,7 +4,6 @@ from brian2 import *
 area = 20000*umetre**2
 Cm = (1*ufarad*cm**-2) * area
 gl = (5e-5*siemens*cm**-2) * area
-
 El = -60*mV
 EK = -90*mV
 ENa = 50*mV
@@ -29,7 +28,7 @@ dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-
          g_kd*(n*n*n*n)*(v-EK))/Cm : volt
 dm/dt = alpha_m*(1-m)-beta_m*m : 1
                 kslsafasz
-                
+
 dn/dt = alpha_n*(1-n)-beta_n*n : 1
 dh/dt = alpha_h*(1-h)-beta_h*h : 1
 dge/dt = -ge*(1./taue) : siemens

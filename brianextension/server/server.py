@@ -43,7 +43,19 @@ class BrianLanguageServer(LanguageServer):
 
 brian_server = BrianLanguageServer("pygls-brian-example", "v0.1")
 
+import re
 
+from pygls import protocol
+from pygls.server import TextDocumentManager
+
+def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
+    """Returns True if the user is currently in the `Equations()` block and False otherwise."""
+
+    text_document = params.text_document
+    text_document_manager = TextDocumentManager()
+
+    current_line = text_document_manager.get_text(text_document)
+    return re.match(r'\beq\s*=\s*Equations\(.*?\b', current_line)
 @brian_server.feature(
     TEXT_DOCUMENT_COMPLETION, CompletionOptions()
 )
@@ -53,8 +65,28 @@ brian_server = BrianLanguageServer("pygls-brian-example", "v0.1")
 def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
 
-# Core Module - https://github.com/brian-team/brian2/tree/master/brian2/core
-    from brian2.core.base import __all__ as ALL_BASE
+
+    if is_in_Equations(params):
+        from brian2.core.base import __all__ as ALL_BASE
+        base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                        for u in ALL_BASE]
+
+        from brian2.core.clocks import __all__ as ALL_CLOCK
+        clock = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                        for u in ALL_CLOCK]
+
+        return CompletionList(
+            is_incomplete=False,
+            items=base+clock
+        )
+    else:
+        return CompletionList(
+            is_incomplete=False,
+            items=["hello"]
+        )
+
+        # Equations -
+#         from brian2.core.base import __all__ as ALL_BASE
     base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in ALL_BASE]
 
@@ -193,20 +225,8 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
 
 
 
+
     return CompletionList(
         is_incomplete=False,
         items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic+special_symbols,
-    )
-
-# #  Go to definition
-# @lsp_types.message('textDocument/definition')
-# def go_to_definition(params: lsp_types.TextDocumentPositionParams) -> lsp_types.Location:
-#     return lsp_types.Location(
-#         uri=params.text_document.uri,
-#         range=lsp_types.Range(
-#             start=lsp_types.Position(line=0, character=0),
-#             end=lsp_types.Position(line=0, character=0),
-#         ),
-#     )
-
-# #  Hover
+ )

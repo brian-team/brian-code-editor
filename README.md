@@ -1,17 +1,66 @@
-# BrianSimulator Extension
-The project aims to improve the editing experience for computational neuroscientists using the Brian simulator, creating a Brian-specific **_Language Server Extension Plugin_** with **_Syntax Highlighting Rule_**, **_Auto-Completion_** and **_Syntax Check_** for _equation-defined python strings_.
+# VS Code Brian Simulator Extension
 
+![VS Code Brian Simulator Extension Logo](images/logo.png)
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Introduction
+
+The VS Code Brian Simulator Extension is a powerful tool that enhances your experience when working with [Brian2](https://brian2.readthedocs.io/) simulations in Visual Studio Code. It provides features like highlighting the input strings for `Equations()` in Brian2 code, making debugging more accessible, and offering auto-completion for Brian2 functions and methods.
+
+![Extension Demo](images/demo.gif)
 
 ## Features
-- Syntax Highlighting
-- Syntax Check
-- Auto-Completion
 
-## Prososal Link
-[Proposal Link ](https://docs.google.com/document/d/1ihM1LT9ymUNy5WaGopsYTurzA9zDrZzzwKpXXvZ3Ots/edit?usp=sharing)
+- **Equations() String Highlighting**: Easily identify the input strings within `Equations()` in your Brian2 code for quick debugging.
 
-## Task
-This section will update on regular basis
-- [x] Readme File
-- [ ] Adding Github Actions
+- **Auto-Completion**: Speed up your coding process with auto-completion suggestions for Brian2 functions and methods, reducing errors and improving code efficiency.
 
+
+## Installation
+
+To install the VS Code Brian Simulator Extension, follow these steps:
+
+1. Open Visual Studio Code.
+
+2. Go to the Extensions view by clicking on the square icon in the left sidebar or pressing `Ctrl+Shift+X`.
+
+3. Search for "Brian Simulator" in the Extensions marketplace.
+
+4. Click the "Install" button for the extension offered by our official publisher.
+
+5. Once installed, the extension is ready to use.
+
+## Usage
+
+1. Open or create a Python file in Visual Studio Code.
+
+2. Write your Brian 2 code, including the `Equations()` section.
+
+3. As you type, the extension will automatically highlight the input string within the `Equations()` block for easy identification.
+
+4. Enjoy the convenience of auto-completion as you write your Brian 2 code. The extension will suggest relevant Brian 2 functions and methods.
+
+
+## Contributing
+
+We welcome contributions to the VS Code Brian Simulator Extension. If you'd like to contribute, please follow these steps:
+
+
+## License
+
+This extension is licensed under the `GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007`. See the [LICENSE](https://github.com/brian-team/brian-code-editor/blob/main/brianextension/LICENSE) file for more information.
+
+---
+
+Thank you for using the VS Code Brian Simulator Extension! If you have any questions, encounter issues, or want to contribute, please don't hesitate to [get in touch]().
+
+Happy coding!

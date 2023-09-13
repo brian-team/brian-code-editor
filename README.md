@@ -1,6 +1,6 @@
 # VS Code Brian Simulator Extension
 
-![VS Code Brian Simulator Extension Logo](images/logo.png)
+![VS Code Brian Simulator Extension Logo](https://github.com/brian-team/brian-code-editor/blob/main/brianextension/logo.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -53,6 +53,20 @@ To install the VS Code Brian Simulator Extension, follow these steps:
 ## Contributing
 
 We welcome contributions to the VS Code Brian Simulator Extension. If you'd like to contribute, please follow these steps:
+
+1. Fork the repository on GitHub.
+
+2. Clone your fork to your local machine.
+
+3. Create a new branch for your feature or bug fix.
+
+4. Make your changes and commit them.
+
+5. Push your changes to your fork.
+
+6. Create a pull request to the main repository.
+
+7. Please Follow [Contributing.md](CONTRIBUTING.MD) for more details 
 
 
 ## License

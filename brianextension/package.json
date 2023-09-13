@@ -16,54 +16,66 @@
     "Data Science", "Machine Learning", "Programming Languages"
   ],
   "activationEvents": [
+    "onLanguage:python",
     "onLanguage:brian"
   ],
-  "main": "./extension.js",
+  "main": "./client/out/extension",
   "contributes": {
-
-    "languages": [
-      {
-        "id": "brian",
-        "extensions": [
-          ".brian"
-        ],
-        "aliases": [
-          "Brian"
-        ],
-        "configuration": "./language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "brian",
-        "scopeName": "source.brian",
-        "path": "./brianLang/syntax/brian.tmLanguage.json"
-      },
-      {
-        "injectTo": ["source.python"],
-        "scopeName": "brian.injection",
-        "path": "./brianLang/syntax/brian.injection.json"
-      }
-    ],
-    "hoverProvider": true
-
+  "languages": [
+    {
+      "id": "brian",
+      "extensions": [
+        ".brian"
+      ],
+      "aliases": [
+        "Brian"
+      ],
+      "configuration": "./language-configuration.json"
+    }
+  ],
+  "grammars": [
+    {
+      "language": "brian",
+      "scopeName": "source.brian",
+      "path": "./brianLang/syntax/brian.tmLanguage.json"
+    },
+    {
+      "injectTo": ["source.python"],
+      "scopeName": "brian.injection",
+      "path": "./brianLang/syntax/brian.injection.json"
+    }
+  ],
+  "hoverProvider": true,
+  "completionItemProvider": {
+    "resolveProvider": true
   },
+  "completionProvider": {
+    "triggerCharacters": [
+      "."
+    ],
+    "resolveProvider": true
+  },
+  "definitionProvider": true
+},
 
 
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "node ./test/runTest.js"
+    "test": "node ./test/runTest.js",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -b",
+    "watch": "tsc -b -w"
   },
   "devDependencies": {
-    "@types/vscode": "^1.78.0",
-    "@types/glob": "^8.1.0",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
-    "eslint": "^8.39.0",
-    "glob": "^8.1.0",
-    "mocha": "^10.2.0",
-    "typescript": "^5.0.4",
-    "@vscode/test-electron": "^2.3.0"
+    "@types/node": "^16.11.6",
+    "@types/vscode": "^1.62.0",
+    "@typescript-eslint/eslint-plugin": "^5.3.0",
+    "@typescript-eslint/parser": "^5.3.0",
+    "eslint": "^8.2.0",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0"
   }
 }

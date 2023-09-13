@@ -1,0 +1,8 @@
+out
+node_modules
+client/server
+.vscode-test
+.vscode/settings.json
+env
+pygls.log
+*.py[cod]

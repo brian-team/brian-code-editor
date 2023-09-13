@@ -11,7 +11,8 @@ ENa = 50*mV
 g_na = (100*msiemens*cm**-2) * area
 g_kd = (30*msiemens*cm**-2) * area
 VT = -63*mV
-# Time constants
+                # Time constants
+
 taue = 5*ms
 taui = 10*ms
 # Reversal potentials
@@ -27,6 +28,8 @@ dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-
          g_na*(m*m*m)*h*(v-ENa)-
          g_kd*(n*n*n*n)*(v-EK))/Cm : volt
 dm/dt = alpha_m*(1-m)-beta_m*m : 1
+                kslsafasz
+                
 dn/dt = alpha_n*(1-n)-beta_n*n : 1
 dh/dt = alpha_h*(1-h)-beta_h*h : 1
 dge/dt = -ge*(1./taue) : siemens
@@ -37,6 +40,7 @@ alpha_h = 0.128*exp((17*mV-v+VT)/(18*mV))/ms : Hz
 beta_h = 4./(1+exp((40*mV-v+VT)/(5*mV)))/ms : Hz
 alpha_n = 0.032*(mV**-1)*5*mV/exprel((15*mV-v+VT)/(5*mV))/ms : Hz
 beta_n = .5*exp((10*mV-v+VT)/(40*mV))/ms : Hz
+
 ''')
 
 P = NeuronGroup(4000, model=eqs, threshold='v>-20*mV', refractory=3*ms,

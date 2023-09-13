@@ -46,22 +46,34 @@ brian_server = BrianLanguageServer("pygls-brian-example", "v0.1")
 import re
 
 from pygls import protocol
-from pygls.server import TextDocumentManager
+
+import ast
+
+class EquationFinder(ast.NodeVisitor):
+    def __init__(self, node):
+        self.eq_lines = []
+        self.visit(node)
+    
+    def visit_Call(self, node):
+        if getattr(node.func, 'id', None) == 'Equations':
+            self.eq_lines.append((node.args[0].lineno, node.args[0].end_lineno))
+        self.generic_visit(node)
 
 def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
     """Returns True if the user is currently in the `Equations()` block and False otherwise."""
 
-    text_document = params.text_document
-    text_document_manager = TextDocumentManager()
+    text_document = params.text_document.uri
+    text = brian_server.workspace.get_document(text_document).source
+    parsed = ast.parse(text)
+    finder = EquationFinder(parsed)
+    for start, end in finder.eq_lines:
+        if start <= params.position.line + 1 <= end:
+            return True
+    return False
 
-    current_line = text_document_manager.get_text(text_document)
-    return re.match(r'\beq\s*=\s*Equations\(.*?\b', current_line)
 @brian_server.feature(
     TEXT_DOCUMENT_COMPLETION, CompletionOptions()
 )
-
-
-
 def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
 
@@ -82,7 +94,7 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     else:
         return CompletionList(
             is_incomplete=False,
-            items=["hello"]
+            items=[CompletionItem(label="hello", kind=CompletionItemKind.Unit)]
         )
 
         # Equations -

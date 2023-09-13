@@ -29,6 +29,7 @@ dv/dt = (gl*(El-v)+ge*(Ee-v)+gi*(Ei-v)-
          g_kd*(n*n*n*n)*(v-EK))/Cm : volt
 dm/dt = alpha_m*(1-m)-beta_m*m : 1
                 kslsafasz
+                
 dn/dt = alpha_n*(1-n)-beta_n*n : 1
 dh/dt = alpha_h*(1-h)-beta_h*h : 1
 dge/dt = -ge*(1./taue) : siemens

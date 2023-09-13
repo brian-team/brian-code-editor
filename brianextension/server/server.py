@@ -177,9 +177,14 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     equations = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in ALL_EQUATIONS]
 
-    # Flags
-    flags = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                    for u in Flag_List]
+    # # Flags
+    # flags = []
+    # cursor_pos = request['position']['character']
+    # line_content = request['text'][:cursor_pos]
+    # if ':' in params.text_document.uri:
+    #     flags = params.text_document.uri.split(':')[1].split(',')
+    # [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+    #                 for u in Flag_List]
 
     # Special symbols
     special_symbols = [CompletionItem(label=u, kind=CompletionItemKind.Unit) for u in list_of_special_symbols]
@@ -190,7 +195,7 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
 
     return CompletionList(
         is_incomplete=False,
-        items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic+flags+special_symbols,
+        items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic+special_symbols,
     )
 
 # #  Go to definition

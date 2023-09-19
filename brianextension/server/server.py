@@ -43,18 +43,62 @@ class BrianLanguageServer(LanguageServer):
 
 brian_server = BrianLanguageServer("pygls-brian-example", "v0.1")
 
+import re
+
+from pygls import protocol
+
+import ast
+
+class EquationFinder(ast.NodeVisitor):
+    def __init__(self, node):
+        self.eq_lines = []
+        self.visit(node)
+    
+    def visit_Call(self, node):
+        if getattr(node.func, 'id', None) == 'Equations':
+            self.eq_lines.append((node.args[0].lineno, node.args[0].end_lineno))
+        self.generic_visit(node)
+
+def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
+    """Returns True if the user is currently in the `Equations()` block and False otherwise."""
+
+    text_document = params.text_document.uri
+    text = brian_server.workspace.get_document(text_document).source
+    parsed = ast.parse(text)
+    finder = EquationFinder(parsed)
+    for start, end in finder.eq_lines:
+        if start <= params.position.line + 1 <= end:
+            return True
+    return False
 
 @brian_server.feature(
     TEXT_DOCUMENT_COMPLETION, CompletionOptions()
 )
-
-
-
 def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
 
-# Core Module - https://github.com/brian-team/brian2/tree/master/brian2/core
-    from brian2.core.base import __all__ as ALL_BASE
+
+    if is_in_Equations(params):
+        from brian2.core.base import __all__ as ALL_BASE
+        base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                        for u in ALL_BASE]
+
+        from brian2.core.clocks import __all__ as ALL_CLOCK
+        clock = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                        for u in ALL_CLOCK]
+
+        return CompletionList(
+            is_incomplete=False,
+            items=base+clock
+        )
+    else:
+        return CompletionList(
+            is_incomplete=False,
+            items=[CompletionItem(label="hello", kind=CompletionItemKind.Unit)]
+        )
+
+        # Equations -
+#         from brian2.core.base import __all__ as ALL_BASE
     base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in ALL_BASE]
 
@@ -193,20 +237,8 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
 
 
 
+
     return CompletionList(
         is_incomplete=False,
         items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic+special_symbols,
-    )
-
-# #  Go to definition
-# @lsp_types.message('textDocument/definition')
-# def go_to_definition(params: lsp_types.TextDocumentPositionParams) -> lsp_types.Location:
-#     return lsp_types.Location(
-#         uri=params.text_document.uri,
-#         range=lsp_types.Range(
-#             start=lsp_types.Position(line=0, character=0),
-#             end=lsp_types.Position(line=0, character=0),
-#         ),
-#     )
-
-# #  Hover
+ )

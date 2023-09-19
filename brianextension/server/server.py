@@ -18,8 +18,10 @@ from typing import Optional
 from lsprotocol.types import (
     CompletionItem,
     CompletionItemKind,
+    CompletionOptions,
     CompletionList,
     CompletionParams,
+    TEXT_DOCUMENT_COMPLETION
 )
 from pygls.server import LanguageServer
 import ast
@@ -59,7 +61,9 @@ def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
     return False
 
 
-
+@brian_server.feature(
+    TEXT_DOCUMENT_COMPLETION, CompletionOptions()
+)
 def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
 
@@ -194,7 +198,8 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
 
 
         cursor_pos = params.position.character
-        line_content = params.text_document.uri[:cursor_pos]
+        text = brian_server.workspace.get_document(params.text_document.uri).source
+        line_content = text.splitlines()[params.position.line][:cursor_pos]
         if '=' in line_content:
             # between = and :
             if ':' not in line_content:

@@ -23,7 +23,13 @@ from lsprotocol.types import (
     CompletionParams,
     Diagnostic,
     TextDocumentPublishDiagnosticsNotification,
-    TEXT_DOCUMENT_COMPLETION
+    TEXT_DOCUMENT_COMPLETION,
+    TEXT_DOCUMENT_DID_OPEN,
+    TEXT_DOCUMENT_DID_CHANGE,
+    DidOpenTextDocumentParams,
+    DidChangeTextDocumentParams,
+    Range,
+    Position,
 )
 from pygls.server import LanguageServer
 import ast
@@ -43,11 +49,16 @@ brian_server = BrianLanguageServer("pygls-brian-example", "v0.1")
 class EquationFinder(ast.NodeVisitor):
     def __init__(self, node):
         self.eq_lines = []
+        self.eq_constants = []
         self.visit(node)
 
     def visit_Call(self, node):
         if getattr(node.func, 'id', None) == 'Equations':
             self.eq_lines.append((node.args[0].lineno, node.args[0].end_lineno))
+            if isinstance(node.args[0], ast.Constant):
+                self.eq_constants.append(node.args[0].value)
+            else:
+                self.eq_constants.append(None)
         self.generic_visit(node)
 
 def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
@@ -62,20 +73,49 @@ def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
             return True
     return False
 
-# Implement basic Diagnostic Function
-def get_diagnostics(param)-> Diagnostic:
-    '''Return a basic message'''
-    text_document = param.text_document.uri
-    text = brian_server.workspace.get_document(text_document).source
+@brian_server.feature(TEXT_DOCUMENT_DID_OPEN)
+async def did_open(ls, params: DidOpenTextDocumentParams):
+    """Text document did open notification."""
+    text = brian_server.workspace.get_document(params.text_document.uri).source
+    diagnostics = get_diagnostics(text)
+    ls.publish_diagnostics(params.text_document.uri, diagnostics)
+
+
+@brian_server.feature(TEXT_DOCUMENT_DID_CHANGE)
+async def did_change(ls, params: DidChangeTextDocumentParams):
+    """Text document did change notification."""
+    text = brian_server.workspace.get_document(params.text_document.uri).source
+    diagnostics = get_diagnostics(text)
+    ls.publish_diagnostics(params.text_document.uri, diagnostics)
+
+
+def get_diagnostics(text):
+    # Get the lines with equations (if any)
+    eq_finder = EquationFinder(ast.parse(text))
+    eqs_lines = eq_finder.eq_lines
+    eqs_constants = eq_finder.eq_constants
+
     diagnostics = []
-    if 'Abhishek' not in text:
-        diagnostics.append(Diagnostic(
-            range={'start': {'line': 0, 'character': 0}, 'end': {'line': 0, 'character': 0}},
-            message='This is a basic diagnostic message',
-            severity=1,
-            source='Brian Language Server'
+    for (start, end), eqs_value in zip(eqs_lines, eqs_constants):
+        try:
+            from brian2.equations.equations import Equations
+            if eqs_value is None:
+                # An equation, but one that isn't defined with a string (maybe a variable?)
+                continue
+            # Try to parse the equations
+            Equations(eqs_value)
+        except Exception as e:
+            # If there is an error, create a diagnostic
+            diagnostics.append(Diagnostic(
+                range=Range(
+                    start=Position(start, 0),
+                    end=Position(end, 0)
+                ),
+                message=str(e),
+                severity=1,
+                source='Brian Language Server'
             ))
-        return diagnostics
+    return diagnostics
 
 
 @brian_server.feature(
@@ -89,8 +129,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         #  if before = we need no completion
         #  if between = and : we need to complete the variable name
         #  if after : we need to complete the flag name
-
-        get_diagnostics(params)
 
         from brian2.core.base import __all__ as ALL_BASE
         base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)

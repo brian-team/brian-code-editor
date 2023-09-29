@@ -21,6 +21,8 @@ from lsprotocol.types import (
     CompletionOptions,
     CompletionList,
     CompletionParams,
+    Diagnostic,
+    TextDocumentPublishDiagnosticsNotification,
     TEXT_DOCUMENT_COMPLETION
 )
 from pygls.server import LanguageServer
@@ -51,14 +53,29 @@ class EquationFinder(ast.NodeVisitor):
 def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
     """Returns True if the user is currently in the `Equations()` block and False otherwise."""
 
-    text_document = params.text_document.uri
-    text = brian_server.workspace.get_document(text_document).source
+    text_document = params.text_document.uri # provide the link
+    text = brian_server.workspace.get_document(text_document).source # give text
     parsed = ast.parse(text)
     finder = EquationFinder(parsed)
     for start, end in finder.eq_lines:
         if start <= params.position.line + 1 <= end:
             return True
     return False
+
+# Implement basic Diagnostic Function
+def get_diagnostics(param)-> Diagnostic:
+    '''Return a basic message'''
+    text_document = param.text_document.uri
+    text = brian_server.workspace.get_document(text_document).source
+    diagnostics = []
+    if 'Abhishek' not in text:
+        diagnostics.append(Diagnostic(
+            range={'start': {'line': 0, 'character': 0}, 'end': {'line': 0, 'character': 0}},
+            message='This is a basic diagnostic message',
+            severity=1,
+            source='Brian Language Server'
+            ))
+        return diagnostics
 
 
 @brian_server.feature(
@@ -72,6 +89,8 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         #  if before = we need no completion
         #  if between = and : we need to complete the variable name
         #  if after : we need to complete the flag name
+
+        get_diagnostics(params)
 
         from brian2.core.base import __all__ as ALL_BASE
         base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
@@ -224,6 +243,4 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                     is_incomplete=False,
                     items =special_symbols+base_unit+flag,
                 )
-
-
 

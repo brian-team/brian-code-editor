@@ -36,6 +36,8 @@ let newArray = Array.from(variables);
 const selector = { language: 'brian', scheme: 'file' };
 vscode.languages.registerDocumentSemanticTokensProvider(selector, provider, legend);
 
+
+
 // const formatter ={
 //     provideDocumentFormattingEdits(document): vscode.TextEdit[] {
 //       const firstLine = document.lineAt(0);

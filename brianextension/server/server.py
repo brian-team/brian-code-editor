@@ -125,22 +125,10 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
 
     if is_in_Equations(params):
-        #  for each line we have to check if the cursor is before = between = and : or after :
-        #  if before = we need no completion
-        #  if between = and : we need to complete the variable name
-        #  if after : we need to complete the flag name
 
         from brian2.core.base import __all__ as ALL_BASE
         base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in ALL_BASE]
-
-        from brian2.core.clocks import __all__ as ALL_CLOCK
-        clock = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_CLOCK]
-
-        from brian2.core.core_preferences import __all__ as ALL_CORE_PREFERENCES
-        core_preferences = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_CORE_PREFERENCES]
 
         from brian2.core.functions import DEFAULT_CONSTANTS, DEFAULT_FUNCTIONS
         constants = [CompletionItem(label=c, kind=CompletionItemKind.Constant)
@@ -149,21 +137,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         functions = [CompletionItem(label=f, kind=CompletionItemKind.Function)
                         for f in DEFAULT_FUNCTIONS]
 
-        from brian2.core.magic import __all__ as ALL_MAGIC
-        magic = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_MAGIC]
-
-        from brian2.core.names import __all__ as ALL_NAMES
-        names = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_NAMES]
-
-        from brian2.core.namespace import __all__ as ALL_NAMESPACE
-        namespace = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_NAMESPACE]
-
-        from brian2.core.network import __all__ as ALL_NETWORK
-        network = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_NETWORK]
 
         from brian2.core.variables import __all__ as ALL_VARIABLES
         variables = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
@@ -176,14 +149,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         from brian2.core.preferences import __all__ as ALL_PREFERENCES
         preferences = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                         for u in ALL_PREFERENCES]
-
-        from brian2.core.spikesource import __all__ as ALL_SPIKESOURCE
-        spikesource = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_SPIKESOURCE]
-
-        from brian2.core.tracking import __all__ as ALL_TRACKING
-        tracking = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_TRACKING]
 
         from brian2.core.variables import __all__ as ALL_VARIABLES
         variables = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
@@ -202,51 +167,9 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         from brian2.units.stdunits import __all__ as ALL_STDUNITS
         units_stdunits = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                         for u in ALL_STDUNITS]
-        from brian2.units.unitsafefunctions import __all__ as ALL_UNITSAFEFUNCTIONS
-        units_unitsafefunctions = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_UNITSAFEFUNCTIONS]
 
 
-        # Utils module - https://github.com/brian-team/brian2/tree/master/brian2/utils
-        from brian2.utils.logger import __all__ as ALL_LOGGER
-        loggers = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_LOGGER]
 
-        # Synapse module - https://brian2.readthedocs.io/en/stable/reference/brian2.synapses.html
-        from brian2.synapses.synapses import __all__ as ALL_SYNAPSES
-        synapses = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_SYNAPSES]
-
-        # StateUpdaters module - https://brian2.readthedocs.io/en/stable/reference/brian2.stateupdaters.html
-        from brian2.stateupdaters import __all__ as ALL_STATEUPDATERS
-        stateupdaters = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_STATEUPDATERS]
-
-        # spatialneuron - https://github.com/brian-team/brian2/blob/master/brian2/spatialneuron/__init__.py
-        from brian2.spatialneuron import __all__ as ALL_SPATIALNEURON
-        spatialneuron = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_SPATIALNEURON]
-
-        # parsing
-        # monitors - https://github.com/brian-team/brian2/blob/master/brian2/monitors/__init__.py
-        from brian2.monitors import __all__ as ALL_MONITORS
-        monitors = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_MONITORS]
-
-        #input
-        from brian2.input import __all__ as ALL_INPUT
-        input = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_INPUT]
-
-        # ImportExport - https://github.com/brian-team/brian2/blob/master/brian2/importexport/__init__.py
-        from brian2.importexport import __all__ as ALL_IMPORTEXPORT
-        importexport = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_IMPORTEXPORT]
-
-        # Groups - https://github.com/brian-team/brian2/blob/master/brian2/groups/__init__.py
-        from brian2.groups import __all__ as ALL_GROUPS
-        groups = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_GROUPS]
 
         # Equations - https://github.com/brian-team/brian2/blob/master/brian2/equations/__init__.py
         from brian2.equations import __all__ as ALL_EQUATIONS
@@ -263,7 +186,7 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                 # complete all
                 return CompletionList(
             is_incomplete=False,
-            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +units_unitsafefunctions +loggers+synapses+stateupdaters+spatialneuron+monitors+input+importexport+groups+equations+names+namespace+network+variables+operations+preferences+spikesource+tracking+base+clock+core_preferences+magic,
+            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +equations+variables+operations+preferences+base,
     )
 
             else:

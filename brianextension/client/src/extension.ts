@@ -36,18 +36,6 @@ let newArray = Array.from(variables);
 const selector = { language: 'brian', scheme: 'file' };
 vscode.languages.registerDocumentSemanticTokensProvider(selector, provider, legend);
 
-
-
-// const formatter ={
-//     provideDocumentFormattingEdits(document): vscode.TextEdit[] {
-//       const firstLine = document.lineAt(0);
-//       if (firstLine.text !== '42') {
-//         return [vscode.TextEdit.insert(firstLine.range.start, '42\n')];
-//       }
-//     }
-//   }
-//     new vscode.languages.registerDocumentFormattingEditProvider('python',provider,formatter );
-
 // Below is mostly copied from
 // https://github.com/openlawlibrary/pygls/blob/main/examples/json-vscode-extension/client/src/extension.ts
 

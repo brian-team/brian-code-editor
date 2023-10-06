@@ -42,6 +42,16 @@
         }
       ],
       "end": "\"\\s*\\)"
+    },
+    "injection4":{
+      "name": "meta.function-call.brian",
+      "begin": "\\bNeuronGroup\\(\\s*\\d+\\s*,\\s*'''\\s*",
+      "patterns": [
+        {
+          "include": "source.brian"
+        }
+      ],
+      "end": "''',\\s*threshold='([\\s\\S]*?)',\\s*reset='([\\s\\S]*?)'\\)"
     }
   }
 }

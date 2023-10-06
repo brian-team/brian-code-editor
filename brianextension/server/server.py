@@ -133,14 +133,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         functions = [CompletionItem(label=f, kind=CompletionItemKind.Function)
                         for f in DEFAULT_FUNCTIONS]
 
-
-
-        from brian2.core.variables import __all__ as ALL_VARIABLES
-        variables = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_VARIABLES]
-
-
-
     # Units module - https://brian2.readthedocs.io/en/stable/reference/brian2.units.html
         from brian2.units.allunits import __all__ as ALL_UNITS
         units_all_units = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
@@ -152,14 +144,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         from brian2.units.stdunits import __all__ as ALL_STDUNITS
         units_stdunits = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                         for u in ALL_STDUNITS]
-
-
-
-
-        # Equations - https://github.com/brian-team/brian2/blob/master/brian2/equations/__init__.py
-        from brian2.equations import __all__ as ALL_EQUATIONS
-        equations = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_EQUATIONS]
 
         special_symbols = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in list_of_special_symbols]
@@ -175,7 +159,7 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                 # complete all
                 return CompletionList(
             is_incomplete=False,
-            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +equations+variables+special_symbols,
+            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
     )
 
             else:

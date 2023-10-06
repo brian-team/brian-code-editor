@@ -126,10 +126,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
 
     if is_in_Equations(params):
 
-        from brian2.core.base import __all__ as ALL_BASE
-        base = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                    for u in ALL_BASE]
-
         from brian2.core.functions import DEFAULT_CONSTANTS, DEFAULT_FUNCTIONS
         constants = [CompletionItem(label=c, kind=CompletionItemKind.Constant)
                         for c in DEFAULT_CONSTANTS]
@@ -138,17 +134,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                         for f in DEFAULT_FUNCTIONS]
 
 
-        from brian2.core.variables import __all__ as ALL_VARIABLES
-        variables = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_VARIABLES]
-
-        from brian2.core.operations import __all__ as ALL_OPERATIONS
-        operations = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_OPERATIONS]
-
-        from brian2.core.preferences import __all__ as ALL_PREFERENCES
-        preferences = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                        for u in ALL_PREFERENCES]
 
         from brian2.core.variables import __all__ as ALL_VARIABLES
         variables = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
@@ -176,6 +161,10 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         equations = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                         for u in ALL_EQUATIONS]
 
+        special_symbols = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                    for u in list_of_special_symbols]
+
+
 
         cursor_pos = params.position.character
         text = brian_server.workspace.get_document(params.text_document.uri).source
@@ -186,7 +175,7 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                 # complete all
                 return CompletionList(
             is_incomplete=False,
-            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +equations+variables+operations+preferences+base,
+            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +equations+variables+special_symbols,
     )
 
             else:
@@ -194,14 +183,12 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                 flag = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in Flag_List]
 
-                special_symbols = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                    for u in list_of_special_symbols]
 
                 base_unit = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in Base_units]
 
                 return CompletionList(
                     is_incomplete=False,
-                    items =special_symbols+base_unit+flag,
+                    items =base_unit+flag,
                 )
 

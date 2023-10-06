@@ -136,10 +136,10 @@ export function activate(context: ExtensionContext): void {
         const cwd = path.join(__dirname, "..", "..");
         const pythonPath = workspace
             .getConfiguration("python")
-            .get<string>("pythonPath");
+            .get<string>("defaultInterpreterPath");
 
         if (!pythonPath) {
-            throw new Error("`python.pythonPath` is not set");
+            throw new Error("`python.defaultInterpreterPath` is not set");
         }
 
         client = startLangServer(pythonPath, ["-m", "server"], cwd);

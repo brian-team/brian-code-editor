@@ -11,7 +11,7 @@ jobs:
             node-version: 16
         - run: |
             cd brianextension
-            pip install --target build/libs brian2 pygls
+            pip install --target bundled/libs brian2 pygls
             npm ci
         - name: Publish to Open VSX Registry
           id: publishToOpenVSX

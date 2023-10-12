@@ -16,8 +16,8 @@
 ############################################################################
 import sys
 import pathlib
-sys.path.insert(0, str(pathlib.Path(__file__).parent / "bundled" / "libs"))
-print("Adding ", str(pathlib.Path(__file__).parent / "bundled" / "libs"), "to path")
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent / "bundled" / "libs"))
+
 import argparse
 import logging
 

@@ -14,6 +14,10 @@
 # See the License for the specific language governing permissions and      #
 # limitations under the License.                                           #
 ############################################################################
+import sys
+import pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).parent / "bundled" / "libs"))
+print("Adding ", str(pathlib.Path(__file__).parent / "bundled" / "libs"), "to path")
 import argparse
 import logging
 

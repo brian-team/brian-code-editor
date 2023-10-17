@@ -135,11 +135,11 @@ export function activate(context: ExtensionContext): void {
         // Production - Client is going to run the server (for use within `.vsix` package)
         const cwd = path.join(__dirname, "..", "..");
         const pythonPath = workspace
-            .getConfiguration("brian")
-            .get<string>("pythoninterpreterpath");
+            .getConfiguration("Brian")
+            .get<string>("python.interpreterpath");
 
         if (!pythonPath) {
-            throw new Error("`brian.pythoninterpreterpath` is not set");
+            throw new Error("`Brian.python.interpreterpath` is not set");
         }
 
         client = startLangServer(pythonPath, ["-m", "server"], cwd);

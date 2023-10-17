@@ -26,7 +26,7 @@
     "configuration":{
       "title": "Brian",
       "properties": {
-        "brian.pythoninterpreterpath": {
+        "python.interpreterpath": {
           "type": "string",
           "default": "python3",
           "description": "Python interpreter path used to run the Brian language server."

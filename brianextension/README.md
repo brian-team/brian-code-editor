@@ -1,15 +1,23 @@
-To prepare everything to run the language server/client, do the following:
-- Create a virtual environment for Python, e.g. using the built-in venv module in the current directory:
-    - python3 -m venv env
-    - source env/bin/activate
-- Install the dependencies (pygls and brian2)
-    - python -m pip install -r requirements.txt
-- Install the node modules (assumes you have npm installed)
-    - npm install
-    - cd client
-    - npm install
-- Start Visual Studio Code and open the current directory (*not* the parent directory)
-- Open debug view (`ctrl + shift + D`)
-- Select `Server + Client` and press `F5`
+## Features
 
-This will open a new window with the extension loaded and start the server. In the original Visual Studio Code window, you can add breakpoints for debugging. If you make changes, restart the server/client.
+- **Equations() String Highlighting**: Easily identify the input strings within `Equations()` in your Brian2 code for quick debugging.
+
+- **Auto-Completion**: Speed up your coding process with auto-completion suggestions for Brian2 functions and methods, reducing errors and improving code efficiency.
+
+## Usage
+
+1. Open or create a Python file in Visual Studio Code.
+
+2. Write your Brian 2 code, including the `Equations()` section.
+
+3. As you type, the extension will automatically highlight the input string within the `Equations()` block for easy identification.
+
+4. Enjoy the convenience of auto-completion as you write your Brian 2 code. The extension will suggest relevant Brian 2 functions and methods.
+
+## Configurations
+
+- Set the `python Interpreter Path`  in the `settings section` file.
+
+## Contributing
+
+- If you have any suggestions or issues, please feel free to open an issue or pull request on [GitHub](https://github.com/brian-team/brian-code-editor).

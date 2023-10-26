@@ -1,3 +1,5 @@
+# Brian2 Extension for Visual Studio Code
+[![Version](https://img.shields.io/visual-studio-marketplace/v/ms-azuretools.vscode-docker)](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) [![Installs](https://img.shields.io/visual-studio-marketplace/i/ms-azuretools.vscode-docker)](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) 
 ## Features
 
 - **Equations() String Highlighting**: Easily identify the input strings within `Equations()` in your Brian2 code for quick debugging.

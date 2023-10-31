@@ -153,16 +153,37 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         cursor_pos = params.position.character
         text = brian_server.workspace.get_document(params.text_document.uri).source
         line_content = text.splitlines()[params.position.line][:cursor_pos]
+        pre_line_content = text.splitlines()[params.position.line-1][:cursor_pos]
         if '=' in line_content:
             # between = and :
             if ':' not in line_content:
                 # complete all
                 return CompletionList(
-            is_incomplete=False,
-            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
-    )
+                is_incomplete=False,
+                items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
+                )
+            elif ':' in line_content:
+                # complete special symbols and flags and base units
+                flag = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                    for u in Flag_List]
 
-            else:
+
+                base_unit = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                    for u in Base_units]
+
+                return CompletionList(
+                    is_incomplete=False,
+                    items =base_unit+flag,
+                )
+
+        elif ':' not in pre_line_content:
+            # line break
+                # complete all
+                return CompletionList(
+                is_incomplete=False,
+                items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
+                )
+        elif ':' in line_content:
                 # complete special symbols and flags and base units
                 flag = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in Flag_List]

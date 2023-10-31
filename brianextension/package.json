@@ -1,25 +1,32 @@
 {
   "name": "brianextension",
-  "displayName": "brianExtension",
+  "displayName": "Brian simulator Extension",
   "publisher": "brian-team",
-  "description": "brianExtension",
-  "icon": "logo.png",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/brian-team/brian-code-editor"
-  },
-  "version": "0.0.5",
-  "engines": {
-    "vscode": "^1.78.0"
-  },
+  "description": "a comprehensive VS Code extension for the Brian neural simulator, which included the implementation of key functionalities such as syntax highlighting, syntax checking, and auto-completion, resulting in an enhanced coding experience for users",
+  "author": {
+    "name": "Brian Team",
+    "website": "https://briansimulator.org/"},
   "categories": [
     "Data Science",
     "Machine Learning",
     "Programming Languages"
   ],
+  "icon": "logo.png",
+  "license":"SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/brian-team/brian-code-editor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brian-team/brian-code-editor"
+  },
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+
   "activationEvents": [
-    "onLanguage:python",
-    "onLanguage:brian"
+    "onLanguage:python"
   ],
   "main": "./client/out/extension",
   "contributes": {

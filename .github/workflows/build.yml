@@ -20,15 +20,14 @@ jobs:
           id: publishToOpenVSX
           uses: HaaLeo/publish-vscode-extension@v1
           with:
-            pat: dummy  # ${{ secrets.OPEN_VSX_TOKEN }}
+            pat: ${{ secrets.OPEN_VSX_TOKEN }}
             packagePath: brianextension
-            dryRun: true
-        # - name: Publish to Visual Studio Marketplace
-        #   uses: HaaLeo/publish-vscode-extension@v1
-        #   with:
-        #     pat:  dummy  # ${{ secrets.VS_MARKETPLACE_TOKEN }}
-        #     registryUrl: https://marketplace.visualstudio.com
-        #     extensionFile: ${{ steps.publishToOpenVSX.outputs.vsixPath }}
+        - name: Publish to Visual Studio Marketplace
+          uses: HaaLeo/publish-vscode-extension@v1
+          with:
+            pat:  ${{ secrets.VS_MARKETPLACE_TOKEN }}
+            registryUrl: https://marketplace.visualstudio.com
+            extensionFile: ${{ steps.publishToOpenVSX.outputs.vsixPath }}
         - name: Upload package file as artifact
           uses: actions/upload-artifact@v3
           with:

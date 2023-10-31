@@ -2,6 +2,9 @@
 
 ![VS Code Brian Simulator Extension Logo](https://github.com/brian-team/brian-code-editor/blob/main/brianextension/logo.png)
 
+[![Version](https://img.shields.io/visual-studio-marketplace/v/brian-team.brianextension)](https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension) [![Installs](https://img.shields.io/visual-studio-marketplace/i/brian-team.brianextension)](https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension)
+
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)

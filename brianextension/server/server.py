@@ -162,7 +162,7 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                 is_incomplete=False,
                 items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
                 )
-            elif ':' in line_content:
+            else:
                 # complete special symbols and flags and base units
                 flag = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in Flag_List]
@@ -174,26 +174,26 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
                 return CompletionList(
                     is_incomplete=False,
                     items =base_unit+flag,
-                )
-
-        elif ':' not in pre_line_content:
-            # line break
-                # complete all
-                return CompletionList(
-                is_incomplete=False,
-                items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
                 )
         elif ':' in line_content:
-                # complete special symbols and flags and base units
-                flag = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                    for u in Flag_List]
+            # complete special symbols and flags and base units
+            flag = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                for u in Flag_List]
 
 
-                base_unit = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
-                    for u in Base_units]
+            base_unit = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
+                for u in Base_units]
 
-                return CompletionList(
-                    is_incomplete=False,
-                    items =base_unit+flag,
-                )
+            return CompletionList(
+                is_incomplete=False,
+                items =base_unit+flag,
+            )
+        elif ':' not in pre_line_content:
+            # line break
+            # complete all
+            return CompletionList(
+            is_incomplete=False,
+            items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
+            )
+
 

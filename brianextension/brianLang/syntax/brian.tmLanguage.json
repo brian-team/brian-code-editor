@@ -5,6 +5,15 @@
   "fileTypes": ["brian"],
   "patterns": [
     {
+      "include": "#equations_lhs"
+    },
+    {
+      "include": "#equation_rhs"
+    },
+    {
+      "include": "#after_colon"
+    },
+    {
       "include": "#comments"
     },
     {
@@ -23,7 +32,19 @@
       "include": "#units"
     },
     {
-      "include": "#equation"
+      "name": "meta.variable_definition.brian",
+      "begin": "(\\s*\\bd)(?=[a-zA-Z_]*/dt\\b)",
+      "end": "dt\\b",
+      "patterns": [
+        {
+          "name": "variable.other.equation.brian",
+          "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+        },
+        {
+          "name": "operator.differential.brian",
+          "match": "\\/"
+        }
+      ]
     }
   ],
   "repository": {
@@ -103,55 +124,6 @@
         }
       ]
     },
-    "equation": {
-      "name": "meta.equations.brian",
-      "begin": "\\s*",
-      "patterns": [
-        {
-          "include": "#equations_lhs"
-        },
-        {
-          "include": "#equation_rhs"
-        },
-        {
-          "include": "#after_colon"
-        },
-        {
-          "include": "#comments"
-        },
-        {
-          "include": "#constants"
-        },
-        {
-          "include": "#operators"
-        },
-        {
-          "include": "#brackets"
-        },
-        {
-          "include": "#functions"
-        },
-        {
-          "include": "#units"
-        },
-        {
-          "name": "meta.variable_definition.brian",
-          "begin": "(\\s*\\bd)(?=[a-zA-Z_]*/dt\\b)",
-          "end": "dt\\b",
-          "patterns": [
-            {
-              "name": "variable.other.equation.brian",
-              "match": "[a-zA-Z_][a-zA-Z0-9_]*"
-            },
-            {
-              "name": "operator.differential.brian",
-              "match": "\\/"
-            }
-          ]
-        }
-      ],
-      "end": "$"
-    },
     "equations_lhs": {
       "name": "meta.equations_lhs.brian",
       "begin": "^(?=\\s*[^\\s])",
@@ -209,7 +181,7 @@
     "equation_rhs": {
       "name": "meta.equation_rhs.brian",
       "begin": "(?<=\\=\\s*)",
-      "end": "$",
+      "end": ":",
       "patterns": [
         {
           "include": "#operators"

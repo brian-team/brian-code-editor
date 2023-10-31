@@ -10,48 +10,51 @@
     },
     {
       "include": "#injection3"
+    },
+    {
+      "include": "#injection4"
     }
   ],
   "repository": {
     "injection1": {
       "name": "meta.function-call.brian",
-      "begin": "\\bEquations\\(\\s*'''\\s*",
+      "begin": "\\bEquations\\(\\'\\'\\'",
       "patterns": [
         {
           "include": "source.brian"
         }
       ],
-      "end": "'''\\)"
+      "end": "\\'\\'\\'"
     },
-    "injection2": {
-      "name": "meta.function-call.brian",
-      "begin": "\\bEquations\\(\\s*'\\s*",
-      "patterns": [
-        {
-          "include": "source.brian"
-        }
-      ],
-      "end": "'\\)"
-    },
-    "injection3": {
-      "name": "meta.function-call.brian",
-      "begin": "\\bEquations\\(\\s*\"\\s*",
-      "patterns": [
-        {
-          "include": "source.brian"
-        }
-      ],
-      "end": "\"\\s*\\)"
-    },
-    "injection4":{
-      "name": "meta.function-call.brian",
-      "begin": "\\bNeuronGroup\\(\\s*\\d+\\s*,\\s*'''\\s*",
-      "patterns": [
-        {
-          "include": "source.brian"
-        }
-      ],
-      "end": "''',\\s*threshold='([\\s\\S]*?)',\\s*reset='([\\s\\S]*?)'\\)"
-    }
+  "injection2": {
+    "name": "meta.function-call.brian",
+    "begin": "\\bEquations\\(\\s*'",
+    "patterns": [
+      {
+        "include": "source.brian"
+      }
+    ],
+    "end": "'"
+  },
+  "injection3": {
+    "name": "meta.function-call.brian",
+    "begin": "\\bEquations\\(\\s*[\"][\"][\"]",
+    "patterns": [
+      {
+        "include": "source.brian"
+      }
+    ],
+    "end": "[\"][\"][\"]"
+  },
+  "injection4": {
+    "name": "meta.function-call.brian",
+    "begin": "\\bEquations\\(\\s*\"",
+    "patterns": [
+      {
+        "include": "source.brian"
+      }
+    ],
+    "end": "\""
   }
+}
 }

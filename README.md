@@ -80,4 +80,23 @@ This extension is licensed under the `GNU GENERAL PUBLIC LICENSE Version 3, 29 J
 
 Thank you for using the VS Code Brian Simulator Extension! If you have any questions, encounter issues, or want to contribute, please don't hesitate to [get in touch](https://brian.discourse.group/).
 
+
+## Google Summer of Code 2023
+
+This project is a part of [Google Summer of Code](https://summerofcode.withgoogle.com/) 2023, sponsored by [INCF](https://www.incf.org/) and mentored by [Marcel Stimberg](https://github.com/mstimberg), [Dan Goodman](https://github.com/thesamovar) and [Ben Evan](https://github.com/bdevans).
+
+[Abhishek Tiwari](https://github.com/AbhishekTiwari23) is the contributor to this project. 
+
+### About Brian.Org
+
+[Brian.Org](https://briansimulator.org/) is an open-source software package for simulating spiking neural networks. It is written in Python and is designed to be easy to use and extend. The project is maintained by a community of developers and researchers from around the world.
+
+### About INCF
+
+The [International Neuroinformatics Coordinating Facility (INCF)](https://www.incf.org/) is an international organization that promotes the sharing of neuroscience data and tools. It supports the development of open-source software and provides funding for research projects like this one.
+
+### About Google Summer of Code
+
+[Google Summer of Code](https://summerofcode.withgoogle.com/) is a global program that offers students stipends to write code for open-source projects. It is sponsored by Google and has been running since 2005. 
+
 Happy coding!

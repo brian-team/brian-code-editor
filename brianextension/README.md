@@ -1,6 +1,4 @@
 # Brian2 Extension for Visual Studio Code
-[![Version](https://img.shields.io/visual-studio-marketplace/v/brian-team.brianextension)](https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension) [![Installs](https://img.shields.io/visual-studio-marketplace/i/brian-team.brianextension)](https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension)
-
 A comprehensive VS Code extension for the [Brian neural simulator](https://briansimulator.org/), which included the implementation of key functionalities such as syntax highlighting, syntax checking, and auto-completion.
 
 

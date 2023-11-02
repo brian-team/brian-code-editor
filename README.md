@@ -2,7 +2,10 @@
 
 ![VS Code Brian Simulator Extension Logo](https://github.com/brian-team/brian-code-editor/blob/main/brianextension/logo.png)
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/brian-team.brianextension)](https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension) [![Installs](https://img.shields.io/visual-studio-marketplace/i/brian-team.brianextension)](https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension)
+![Open VSX Version](https://img.shields.io/open-vsx/v/brian-team/brianextension?label=OpenVSX%20version)
+![Open VSX Downloads](https://img.shields.io/open-vsx/dt/brian-team/brianextension?label=OpenVSX%20downloads)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/brian-team.brianextension?label=VS%20marketplace%20version)]((https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension))
+[![Visual Studio Marketplace Version Installs](https://img.shields.io/visual-studio-marketplace/i/brian-team.brianextension?label=VS%20marketplace%20installs)](https://marketplace.visualstudio.com/items?itemName=brian-team.brianextension)
 
 
 ## Table of Contents

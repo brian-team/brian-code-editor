@@ -1,302 +1,284 @@
 {
-  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-  "name": "Brian",
-  "scopeName": "source.brian",
-  "fileTypes": ["brian"],
-  "patterns": [
-    {
-      "include": "#equations_lhs"
-    },
-    {
-      "include": "#equation_rhs"
-    },
-    {
-      "include": "#after_colon"
-    },
-    {
-      "include": "#comments"
-    },
-    {
-      "include": "#constants"
-    },
-    {
-      "include": "#operators"
-    },
-    {
-      "include": "#brackets"
-    },
-    {
-      "include": "#functions"
-    },
-    {
-      "include": "#units"
-    },
-    {
-      "name": "meta.variable_definition.brian",
-      "begin": "(\\s*\\bd)(?=[a-zA-Z_]*/dt\\b)",
-      "end": "dt\\b",
-      "patterns": [
-        {
-          "name": "variable.other.equation.brian",
-          "match": "[a-zA-Z_][a-zA-Z0-9_]*"
-        },
-        {
-          "name": "operator.differential.brian",
-          "match": "\\/"
-        }
-      ]
-    }
-  ],
-  "repository": {
-    "comments": {
-      "patterns": [
-        {
-          "begin": "#",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.brian"
+   "$schema":"https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+   "name":"Brian",
+   "scopeName":"source.brian",
+   "fileTypes":[
+      "brian"
+   ],
+   "patterns":[
+      {
+         "include":"#variable_definition"
+      },
+      {
+         "include":"#equations_lhs"
+      },
+      {
+         "include":"#equation_rhs"
+      },
+      {
+         "include":"#after_colon"
+      },
+      {
+         "include":"#comments"
+      },
+      {
+         "include":"#constants"
+      },
+      {
+         "include":"#operators"
+      },
+      {
+         "include":"#brackets"
+      },
+      {
+         "include":"#functions"
+      },
+      {
+         "include":"#units"
+      }
+   ],
+   "repository":{
+      "comments":{
+         "patterns":[
+            {
+               "begin":"#",
+               "beginCaptures":{
+                  "0":{
+                     "name":"punctuation.definition.comment.brian"
+                  }
+               },
+               "end":"\\n",
+               "name":"comment.line.number-sign.brian"
+            },
+            {
+               "begin":"\\/\\*",
+               "beginCaptures":{
+                  "0":{
+                     "name":"punctuation.definition.comment.brian"
+                  }
+               },
+               "end":"\\*\\/",
+               "name":"comment.block.brian"
             }
-          },
-          "end": "\\n",
-          "name": "comment.line.number-sign.brian"
-        },
-        {
-          "begin": "\\/\\*",
-          "beginCaptures": {
-            "0": {
-              "name": "punctuation.definition.comment.brian"
+         ]
+      },
+      "equations_lhs":{
+         "name":"meta.equations_lhs.brian",
+         "begin":"^(?=\\s*[^\\s])",
+         "end":"(?=[=:])",
+         "patterns":[
+            {
+               "include":"#comments"
+            },
+            {
+               "include":"#variable_definition"
+            },
+            {
+               "name":"variable.other.lhs.brian",
+               "match":"[a-zA-Z_][a-zA-Z0-9_]*"
+            },
+            {
+               "include":"#operators"
+            },
+            {
+               "include":"#brackets"
+            },
+            {
+               "include":"#functions"
+            },
+            {
+               "include":"#constants"
+            },
+            {
+               "include":"#units"
+            },
+            {
+               "include":"#comments"
+            },
+            {
+               "include":"#after_colon"
             }
-          },
-          "end": "\\*\\/",
-          "name": "comment.block.brian"
-        }
-      ]
-    },
-    "constants": {
-      "patterns": [
-        {
-          "match": "\\b(?i:(0x\\h*)L)",
-          "name": "constant.numeric.integer.long.hexadecimal.brian"
-        },
-        {
-          "match": "\\b(?i:(0x\\h*))",
-          "name": "constant.numeric.integer.hexadecimal.brian"
-        },
-        {
-          "match": "\\b(?i:(0o?[0-7]+)L)",
-          "name": "constant.numeric.integer.long.octal.brian"
-        },
-        {
-          "match": "\\b(?i:(0o?[0-7]+))",
-          "name": "constant.numeric.integer.octal.brian"
-        },
-        {
-          "match": "\\b(?i:(0b[01]+)L)",
-          "name": "constant.numeric.integer.long.binary.brian"
-        },
-        {
-          "match": "\\b(?i:(0b[01]+))",
-          "name": "constant.numeric.integer.binary.brian"
-        },
-        {
-          "match": "\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)",
-          "name": "constant.numeric.complex.brian"
-        },
-        {
-          "match": "\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])",
-          "name": "constant.numeric.float.brian"
-        },
-        {
-          "match": "(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))",
-          "name": "constant.numeric.float.brian"
-        },
-        {
-          "match": "\\b(?i:(\\d+e[\\-\\+]?\\d+))",
-          "name": "constant.numeric.float.brian"
-        },
-        {
-          "match": "\\b(?i:([1-9]+[0-9]*|0)L)",
-          "name": "constant.numeric.integer.long.decimal.brian"
-        },
-        {
-          "match": "\\b([1-9]+[0-9]*|0)",
-          "name": "constant.numeric.integer.decimal.brian"
-        }
-      ]
-    },
-    "equations_lhs": {
-      "name": "meta.equations_lhs.brian",
-      "begin": "^(?=\\s*[^\\s])",
-      "end": "(?=[\\=|\\:])",
-      "patterns": [
-        {
-          "include": "#variable_definition"
-        },
-        {
-          "name": "variable.other.equation.brian",
-          "match": "[a-zA-Z_][a-zA-Z0-9_]*"
-        },
-        {
-          "include": "#operators"
-        },
-        {
-          "include": "#brackets"
-        },
-        {
-          "include": "#functions"
-        },
-        {
-          "include": "#constants"
-        },
-        {
-          "include": "#units"
-        },
-        {
-          "include": "#comments"
-        },
-        {
-          "inclide":"#after_colon"
-        }
-      ]
-    },
-    "variable_definition": {
-      "patterns": [
-        {
-          "name": "meta.variable_definition.brian",
-          "begin": "(\\s*\\bd)(?=[a-zA-Z_]*/dt\\b)",
-          "end": "dt\\b",
-          "patterns": [
+         ]
+      },
+      "equation_rhs":{
+         "name":"meta.equation_rhs.brian",
+         "begin":"(?<=\\=\\s*)",
+         "end":":",
+         "patterns":[
             {
-              "name": "variable.other.equation.brian",
-              "match": "[a-zA-Z_][a-zA-Z0-9_]*"
+               "include":"#operators"
             },
             {
-              "name": "operator.differential.brian",
-              "match": "\\/"
+               "include":"#brackets"
+            },
+            {
+               "include":"#functions"
+            },
+            {
+               "include":"#constants"
+            },
+            {
+               "include":"#units"
+            },
+            {
+               "include":"#comments"
+            },
+            {
+               "name":"variable.other.brian",
+               "match":"\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+            },
+            {
+               "include":"#after_colon"
             }
-          ]
-        }
-      ]
-    },
-    "equation_rhs": {
-      "name": "meta.equation_rhs.brian",
-      "begin": "(?<=\\=\\s*)",
-      "end": ":",
-      "patterns": [
-        {
-          "include": "#operators"
-        },
-        {
-          "include": "#brackets"
-        },
-        {
-          "include": "#functions"
-        },
-        {
-          "include": "#constants"
-        },
-        {
-          "include": "#units"
-        },
-        {
-          "include": "#comments"
-        },
-        {
-          "name": "constant.other.brian",
-          "match": "[a-zA-Z_][a-zA-Z0-9_]*"
-        },
-        {
-          "include": "#after_colon"
-        }
-      ]
-    },
-    "after_colon": {
-      "patterns": [
-        {
-          "name": "meta.after_colon.brian",
-          "begin": ":\\s*",
-          "end": "$",
-          "patterns": [
+         ]
+      },
+      "variable_definition":{
+         "patterns":[
             {
-              "include": "#comments"
-            },
-            {
-              "include": "#operators"
-            },
-            {
-              "include": "#constants"
-            },
-            {
-              "include": "#units"
-            },
-            {
-              "name": "meta.flag.brian",
-              "begin": "\\(\\s*",
-              "beginCaptures": {
-                "0": {
-                  "name": "flag.punctuation.parenthesis.begin.brian"
-                }
-              },
-              "patterns": [
-                {
-                  "name": "keyword.other.flag.brian",
-                  "match": "\\s*([^,\\s)(]+)\\s*(,\\s*([^,\\s)(]+)\\s*)*"
-                }
-              ],
-              "end": "\\s*\\)",
-              "endCaptures": {
-                "0": {
-                  "name": "flag.punctuation.parenthesis.end.brian"
-                }
-              }
+               "name":"keyword.other.differential.brian",
+               "match":"\\bd[a-zA-Z_][a-zA-Z0-9_]*\\/dt\\b"
             }
-          ]
-        }
-      ]
-    },
-    "operators": {
-      "patterns": [
-        {
-          "match": "<\\=|>\\=|\\=\\=|<|>|\\!\\=",
-          "name": "keyword.operator.comparison.brian"
-        },
-        {
-          "match": "\\+\\=|-\\=|\\*\\=|/\\=|//\\=|%\\=|&\\=|\\|\\=|\\^\\=|>>\\=|<<\\=|\\*\\*\\=",
-          "name": "keyword.operator.assignment.augmented.brian"
-        },
-        {
-          "match": "\\+|\\-|\\*|\\*\\*|/|//|%|<<|>>|&|\\||\\^|~",
-          "name": "keyword.operator.arithmetic.brian"
-        },
-        {
-          "match": "\\=",
-          "name": "keyword.operator.assignment.brian"
-        }
-      ]
-    },
-    "brackets": {
-      "patterns": [
-        {
-          "name": "punctuation.parenthesis.begin.brian",
-          "match": "[\\(]"
-        },
-        {
-          "name": "punctuation.parenthesis.end.brian",
-          "match": "[\\)]"
-        },
-        {
-          "name": "invalid.illegal.bracket.brian",
-          "match": "[\\[\\]{}]"
-        }
-      ]
-    },
-    "functions": {
-      "name": "mata.function-call.brian",
-      "match": "\\b(exp|exprel)\\b"
-    },
-    "units": {
-      "name": "meta.units.brian",
-      "match": "\\b(amp|ampere|kilogram|kilogramme|second|metre|meter|mole|mol| kelvin|candela|coulomb|farad|gram|gramme|hertz|joule|liter|litre|molar| pascal | ohm|siemens|volt|watt|cmetre|cmeter|cm | nS|ms| Hz| mM|mV |nS)\\b"
-    }
-  }
+         ]
+      },
+      "after_colon":{
+         "patterns":[
+            {
+               "name":"meta.after_colon.brian",
+               "begin":":\\s*",
+               "end":"$",
+               "patterns":[
+                  {
+                     "include":"#comments"
+                  },
+                  {
+                     "include":"#operators"
+                  },
+                  {
+                     "include":"#constants"
+                  },
+                  {
+                     "include":"#units"
+                  },
+                  {
+                     "name":"meta.flag.brian",
+                     "begin":"\\(\\s*",
+                     "beginCaptures":{
+                        "0":{
+                           "name":"flag.punctuation.parenthesis.begin.brian"
+                        }
+                     },
+                     "patterns":[
+                        {
+                           "name":"keyword.other.flag.brian",
+                           "match":"\\s*([^,\\s)(]+)\\s*(,\\s*([^,\\s)(]+)\\s*)*"
+                        }
+                     ],
+                     "end":"\\s*\\)",
+                     "endCaptures":{
+                        "0":{
+                           "name":"flag.punctuation.parenthesis.end.brian"
+                        }
+                     }
+                  }
+               ]
+            }
+         ]
+      },
+      "operators":{
+         "patterns":[
+            {
+               "match":"<\\=|>\\=|\\=\\=|<|>|\\!\\=",
+               "name":"keyword.operator.comparison.brian"
+            },
+            {
+               "match":"\\*\\*\\=|>>=|<<=|//=|\\+=|-=|\\*=|/=|%=|&=|\\|=|\\^=",
+               "name":"keyword.operator.assignment.augmented.brian"
+            },
+            {
+               "match":"\\*\\*|//|<<|>>|\\+|\\-|\\*|/|%|&|\\||\\^|~",
+               "name":"keyword.operator.arithmetic.brian"
+            },
+            {
+               "match":"\\=",
+               "name":"keyword.operator.assignment.brian"
+            }
+         ]
+      },
+      "brackets":{
+         "patterns":[
+            {
+               "name":"punctuation.parenthesis.begin.brian",
+               "match":"\\("
+            },
+            {
+               "name":"punctuation.parenthesis.end.brian",
+               "match":"\\)"
+            },
+            {
+               "name":"invalid.illegal.bracket.brian",
+               "match":"[\\[\\]\\{\\}]"
+            }
+         ]
+      },
+      "functions":{
+         "name":"support.function.builtin.brian",
+         "match":"\\b(arange|arccos|arccosh|arcsin|arcsinh|arctan|arctanh|cos|cosh|diagonal|dot|exp|expm1|exprel|linspace|log|log10|log1p|ones_like|ptp|ravel|sin|sinh|tan|tanh|trace|where)\\b"
+      },
+      "units":{
+         "name":"support.type.unit.brian",
+         "match":"\\b(amp|ampere|A|kilogram|kg|gram|g|gramme|second|s|metre|meter|m|mole|mol|kelvin|K|candle|candela|coulomb|farad|hertz|Hz|joule|liter|litre|molar|pascal|ohm|siemens|volt|watt|cm|cm2|cm3|mm|mm2|mm3|um|um2|um3|ms|ns|us|mV|uV|nV|mA|uA|nA|pA|mS|uS|nS|pS|mF|uF|nF|pF|mM|uM|nM|kHz|MHz|GHz|kohm|Mohm)\\b"
+      },
+      "constants":{
+         "patterns":[
+            {
+               "match":"\\b(?i:(0x[0-9a-fA-F]*)L)",
+               "name":"constant.numeric.integer.long.hexadecimal.brian"
+            },
+            {
+               "match":"\\b(?i:(0x[0-9a-fA-F]*))",
+               "name":"constant.numeric.integer.hexadecimal.brian"
+            },
+            {
+               "match":"\\b(?i:(0o?[0-7]+)L)",
+               "name":"constant.numeric.integer.long.octal.brian"
+            },
+            {
+               "match":"\\b(?i:(0o?[0-7]+))",
+               "name":"constant.numeric.integer.octal.brian"
+            },
+            {
+               "match":"\\b(?i:(0b[01]+)L)",
+               "name":"constant.numeric.integer.long.binary.brian"
+            },
+            {
+               "match":"\\b(?i:(0b[01]+))",
+               "name":"constant.numeric.integer.binary.brian"
+            },
+            {
+               "match":"\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)",
+               "name":"constant.numeric.complex.brian"
+            },
+            {
+               "match":"\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])",
+               "name":"constant.numeric.float.brian"
+            },
+            {
+               "match":"(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))",
+               "name":"constant.numeric.float.brian"
+            },
+            {
+               "match":"\\b(?i:(\\d+e[\\-\\+]?\\d+))",
+               "name":"constant.numeric.float.brian"
+            },
+            {
+               "match":"\\b(?i:([1-9]+[0-9]*|0)L)",
+               "name":"constant.numeric.integer.long.decimal.brian"
+            },
+            {
+               "match":"\\b([1-9]+[0-9]*|0)",
+               "name":"constant.numeric.integer.decimal.brian"
+            }
+         ]
+      }
+   }
 }

@@ -7,7 +7,7 @@ const tokenModifiers = ['declaration', 'definition', 'readonly', 'deprecated', '
 let variables = new Set();
 const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
 const provider = {
-    provideDocumentSemanticTokens: (document) => {
+    provideDocumentSemanticTokens: (document) => {       
         const builder = new vscode.SemanticTokensBuilder(legend);
         const text = document.getText();
         const differential_variable_pattern = /d(\w+)\/dt/g;
@@ -16,9 +16,9 @@ const provider = {
 
         let match;
         while ((match = differential_variable_pattern.exec(text))) {
-            variables.add(match[0].substring(1, match[0].length -3));
+            variables.add(match[0].substring(1, match[0].length - 3));
         }
-        while(match = variable_pattern.exec(text)){
+        while (match = variable_pattern.exec(text)) {
             variables.add(match[0]);
         }
         console.log(variables + 'variables')
@@ -78,13 +78,13 @@ function getClientOptions(): LanguageClientOptions {
     return {
         // Register the server for python documents
         documentSelector: isVirtualWorkspace()
-        ? [{ language: 'python' }]
-        : [
-            { scheme: 'file', language: 'python' },
-            { scheme: 'untitled', language: 'python' },
-            { scheme: 'vscode-notebook', language: 'python' },
-            { scheme: 'vscode-notebook-cell', language: 'python' },
-        ],
+            ? [{ language: 'python' }]
+            : [
+                { scheme: 'file', language: 'python' },
+                { scheme: 'untitled', language: 'python' },
+                { scheme: 'vscode-notebook', language: 'python' },
+                { scheme: 'vscode-notebook-cell', language: 'python' },
+            ],
         outputChannelName: "[pygls] BrianLanguageServer",
         synchronize: {
             // Notify the server about file changes to '.clientrc files contain in the workspace
@@ -127,21 +127,17 @@ function startLangServer(
     return new LanguageClient(command, serverOptions, getClientOptions());
 }
 
-export function activate(context: ExtensionContext): void {
+export async function activate(context: ExtensionContext): Promise<void> {
+    const pythonPath = await getPythonPath();
+
+    if (!pythonPath) return;
+    const cwd = path.join(__dirname, "..", "..");
+
     if (context.extensionMode === ExtensionMode.Development) {
-        // Development - Run the server manually
-        client = startLangServerTCP(2087);
+        // Development - Run the server
+        client = startLangServer(pythonPath, ["-m", "server"], cwd);
     } else {
-        // Production - Client is going to run the server (for use within `.vsix` package)
-        const cwd = path.join(__dirname, "..", "..");
-        const pythonPath = workspace
-            .getConfiguration("Brian")
-            .get<string>("python.interpreterpath");
-
-        if (!pythonPath) {
-            throw new Error("`Brian.python.interpreterpath` is not set");
-        }
-
+        // Production - running auto 
         client = startLangServer(pythonPath, ["-m", "server"], cwd);
     }
 
@@ -150,4 +146,24 @@ export function activate(context: ExtensionContext): void {
 
 export function deactivate(): Thenable<void> {
     return client ? client.stop() : Promise.resolve();
+}
+
+async function getPythonPath(): Promise<string | undefined> {
+    // check if py extention is installed 
+    const pythonExtension = vscode.extensions.getExtension('ms-python.python');
+    if (!pythonExtension) {
+        vscode.window.showErrorMessage("Brian Extension: Please install the Microsoft Python extension.");
+        return undefined;
+    }
+
+    // if it sleeping , Activate it
+    if (!pythonExtension.isActive) {
+        await pythonExtension.activate();
+    }
+
+    // get the path 
+    const api = pythonExtension.exports;
+    const activeEnv = await api.environments.getActiveEnvironmentPath();
+
+    return activeEnv?.path;
 }

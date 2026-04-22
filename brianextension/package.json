@@ -5,14 +5,15 @@
   "description": "a comprehensive VS Code extension for the Brian neural simulator, which included the implementation of key functionalities such as syntax highlighting, syntax checking, and auto-completion, resulting in an enhanced coding experience for users",
   "author": {
     "name": "Brian Team",
-    "website": "https://briansimulator.org/"},
+    "website": "https://briansimulator.org/"
+  },
   "categories": [
     "Data Science",
     "Machine Learning",
     "Programming Languages"
   ],
   "icon": "logo.png",
-  "license":"SEE LICENSE IN LICENSE",
+  "license": "SEE LICENSE IN LICENSE",
   "bugs": {
     "url": "https://github.com/brian-team/brian-code-editor/issues"
   },
@@ -24,13 +25,12 @@
   "engines": {
     "vscode": "^1.78.0"
   },
-
   "activationEvents": [
     "onLanguage:python"
   ],
   "main": "./client/out/extension",
   "contributes": {
-    "configuration":{
+    "configuration": {
       "title": "Brian",
       "properties": {
         "Brian.python.interpreterpath": {
@@ -92,6 +92,7 @@
     "@typescript-eslint/eslint-plugin": "^8.59.0",
     "@typescript-eslint/parser": "^8.59.0",
     "eslint": "^10.2.1",
+    "globals": "^17.5.0",
     "typescript": "^6.0.3"
   },
   "dependencies": {

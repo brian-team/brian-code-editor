@@ -4,10 +4,10 @@ const vscode = require('vscode');
 
 const tokenTypes = ['variable', 'type', 'number', 'comment', 'operator'];
 const tokenModifiers = ['declaration', 'definition', 'readonly', 'deprecated', 'modification', 'documentation', 'defaultLibrary'];
-let variables = new Set();
+let variables = new Set<string>();
 const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
 const provider = {
-    provideDocumentSemanticTokens: (document) => {       
+    provideDocumentSemanticTokens: (document: TextDocument) => {
         const builder = new vscode.SemanticTokensBuilder(legend);
         const text = document.getText();
         const differential_variable_pattern = /d(\w+)\/dt/g;
@@ -60,6 +60,7 @@ vscode.languages.registerDocumentSemanticTokensProvider(selector, provider, lege
 
 import * as net from "net";
 import * as path from "path";
+import type { TextDocument } from "vscode";
 import { ExtensionContext, ExtensionMode, workspace } from "vscode";
 import {
     LanguageClient,
@@ -141,7 +142,12 @@ export async function activate(context: ExtensionContext): Promise<void> {
         client = startLangServer(pythonPath, ["-m", "server"], cwd);
     }
 
-    context.subscriptions.push(client.start());
+    context.subscriptions.push({
+        dispose: () => {
+            void client.stop();
+        },
+    });
+    await client.start();
 }
 
 export function deactivate(): Thenable<void> {

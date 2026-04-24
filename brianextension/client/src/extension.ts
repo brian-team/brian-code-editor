@@ -1,6 +1,6 @@
 "use strict";
 
-const vscode = require('vscode');
+import * as vscode from 'vscode';
 
 const tokenTypes = ['variable', 'type', 'number', 'comment', 'operator'];
 const tokenModifiers = ['declaration', 'definition', 'readonly', 'deprecated', 'modification', 'documentation', 'defaultLibrary'];
@@ -16,9 +16,9 @@ const provider = {
 
         let match;
         while ((match = differential_variable_pattern.exec(text))) {
-            variables.add(match[0].substring(1, match[0].length -3));
+            variables.add(match[0].substring(1, match[0].length - 3));
         }
-        while(match = variable_pattern.exec(text)){
+        while (match = variable_pattern.exec(text)) {
             variables.add(match[0]);
         }
         console.log(variables + 'variables')
@@ -79,13 +79,13 @@ function getClientOptions(): LanguageClientOptions {
     return {
         // Register the server for python documents
         documentSelector: isVirtualWorkspace()
-        ? [{ language: 'python' }]
-        : [
-            { scheme: 'file', language: 'python' },
-            { scheme: 'untitled', language: 'python' },
-            { scheme: 'vscode-notebook', language: 'python' },
-            { scheme: 'vscode-notebook-cell', language: 'python' },
-        ],
+            ? [{ language: 'python' }]
+            : [
+                { scheme: 'file', language: 'python' },
+                { scheme: 'untitled', language: 'python' },
+                { scheme: 'vscode-notebook', language: 'python' },
+                { scheme: 'vscode-notebook-cell', language: 'python' },
+            ],
         outputChannelName: "[pygls] BrianLanguageServer",
         synchronize: {
             // Notify the server about file changes to '.clientrc files contain in the workspace
@@ -128,30 +128,51 @@ function startLangServer(
     return new LanguageClient(command, serverOptions, getClientOptions());
 }
 
-export function activate(context: ExtensionContext): void {
-    if (context.extensionMode === ExtensionMode.Development) {
-        // Development - Run the server manually
-        client = startLangServerTCP(2087);
-    } else {
-        // Production - Client is going to run the server (for use within `.vsix` package)
-        const cwd = path.join(__dirname, "..", "..");
-        const pythonPath = workspace
-            .getConfiguration("Brian")
-            .get<string>("python.interpreterpath");
+export async function activate(context: ExtensionContext): Promise<void> {
+    const pythonExtension = vscode.extensions.getExtension('ms-python.python');
 
-        if (!pythonPath) {
-            throw new Error("`Brian.python.interpreterpath` is not set");
-        }
-
-        client = startLangServer(pythonPath, ["-m", "server"], cwd);
+    if (!pythonExtension) {
+        vscode.window.showErrorMessage("Brian Extension: Please install Microsoft Python extension");
+        return;
     }
 
-    context.subscriptions.push({
-        dispose: () => {
-            void client.stop();
-        },
-    });
-    await client.start();
+    // before get the api Ensure its active
+    if (!pythonExtension.isActive) {
+        await pythonExtension.activate();
+    }
+
+    const api = pythonExtension.exports;
+
+    async function startServer() {
+        if (client) {
+            await client.stop();
+        }
+
+        // get the path directly from the 'api' 
+        const activeEnv = await api.environments.getActiveEnvironmentPath();
+        const pythonPath = activeEnv?.path;
+
+        if (!pythonPath) {
+            console.error("Brian Extension: No Python path found.");
+            return;
+        }
+
+        const cwd = path.join(__dirname, "..", "..");
+        client = startLangServer(pythonPath, ["-m", "server"], cwd);
+
+        await client.start();
+    }
+
+    // initial start
+    await startServer();
+
+    // Listen for changes using the 'api'
+    context.subscriptions.push(
+        api.environments.onDidChangeActiveEnvironmentPath(async () => {
+            console.log("Brian Extension: Python environment changed.");
+            await startServer();
+        })
+    );
 }
 
 export function deactivate(): Thenable<void> {

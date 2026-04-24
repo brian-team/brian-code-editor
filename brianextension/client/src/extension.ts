@@ -1,6 +1,6 @@
 "use strict";
 
-const vscode = require('vscode');
+import * as vscode from 'vscode';
 
 const tokenTypes = ['variable', 'type', 'number', 'comment', 'operator'];
 const tokenModifiers = ['declaration', 'definition', 'readonly', 'deprecated', 'modification', 'documentation', 'defaultLibrary'];
@@ -129,47 +129,52 @@ function startLangServer(
 }
 
 export async function activate(context: ExtensionContext): Promise<void> {
-    const pythonPath = await getPythonPath();
-
-    if (!pythonPath) return;
-    const cwd = path.join(__dirname, "..", "..");
-
-    if (context.extensionMode === ExtensionMode.Development) {
-        // Development - Run the server
-        client = startLangServer(pythonPath, ["-m", "server"], cwd);
-    } else {
-        // Production - running auto 
-        client = startLangServer(pythonPath, ["-m", "server"], cwd);
-    }
-
-    context.subscriptions.push({
-        dispose: () => {
-            void client.stop();
-        },
-    });
-    await client.start();
-}
-
-export function deactivate(): Thenable<void> {
-    return client ? client.stop() : Promise.resolve();
-}
-
-async function getPythonPath(): Promise<string | undefined> {
-    // check if py extention is installed 
     const pythonExtension = vscode.extensions.getExtension('ms-python.python');
+
     if (!pythonExtension) {
-        vscode.window.showErrorMessage("Brian Extension: Please install the Microsoft Python extension.");
-        return undefined;
+        vscode.window.showErrorMessage("Brian Extension: Please install Microsoft Python extension");
+        return;
     }
 
-    // if it sleeping , Activate it
+    // before get the api Ensure its active
     if (!pythonExtension.isActive) {
         await pythonExtension.activate();
     }
 
-    // get the path 
     const api = pythonExtension.exports;
-    const activeEnv = await api.environments.getActiveEnvironmentPath();
 
-    return activeEnv?.path;
+    async function startServer() {
+        if (client) {
+            await client.stop();
+        }
+
+        // get the path directly from the 'api' 
+        const activeEnv = await api.environments.getActiveEnvironmentPath();
+        const pythonPath = activeEnv?.path;
+
+        if (!pythonPath) {
+            console.error("Brian Extension: No Python path found.");
+            return;
+        }
+
+        const cwd = path.join(__dirname, "..", "..");
+        client = startLangServer(pythonPath, ["-m", "server"], cwd);
+
+        await client.start();
+    }
+
+    // initial start
+    await startServer();
+
+    // Listen for changes using the 'api'
+    context.subscriptions.push(
+        api.environments.onDidChangeActiveEnvironmentPath(async () => {
+            console.log("Brian Extension: Python environment changed.");
+            await startServer();
+        })
+    );
+}
+
+export function deactivate(): Thenable<void> {
+    return client ? client.stop() : Promise.resolve();
 }

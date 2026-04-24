@@ -35,13 +35,7 @@
   "contributes": {
     "configuration": {
       "title": "Brian",
-      "properties": {
-        "Brian.python.interpreterpath": {
-          "type": "string",
-          "default": "python3",
-          "description": "Python interpreter path used to run the Brian language server."
-        }
-      }
+      "properties": {}
     },
     "languages": [
       {

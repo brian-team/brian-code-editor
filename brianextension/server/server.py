@@ -14,25 +14,26 @@
 # See the License for the specific language governing permissions and      #
 # limitations under the License.                                           #
 ############################################################################
+import ast
 from typing import Optional
+
 from lsprotocol.types import (
+    TEXT_DOCUMENT_COMPLETION,
+    TEXT_DOCUMENT_DID_CHANGE,
+    TEXT_DOCUMENT_DID_OPEN,
     CompletionItem,
     CompletionItemKind,
-    CompletionOptions,
     CompletionList,
+    CompletionOptions,
     CompletionParams,
     Diagnostic,
-    TextDocumentPublishDiagnosticsNotification,
-    TEXT_DOCUMENT_COMPLETION,
-    TEXT_DOCUMENT_DID_OPEN,
-    TEXT_DOCUMENT_DID_CHANGE,
-    DidOpenTextDocumentParams,
     DidChangeTextDocumentParams,
-    Range,
+    DidOpenTextDocumentParams,
     Position,
+    PublishDiagnosticsParams,
+    Range,
 )
-from pygls.server import LanguageServer
-import ast
+from pygls.lsp.server import LanguageServer
 
 Flag_List = ['event-driven','unless refractory','constant','constant over dt','shared','linked']
 
@@ -64,8 +65,10 @@ class EquationFinder(ast.NodeVisitor):
 def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
     """Returns True if the user is currently in the `Equations()` block and False otherwise."""
 
+    if params is None:
+        return False
     text_document = params.text_document.uri # provide the link
-    text = brian_server.workspace.get_document(text_document).source # give text
+    text = brian_server.workspace.get_text_document(text_document).source # give text
     parsed = ast.parse(text)
     finder = EquationFinder(parsed)
     for start, end in finder.eq_lines:
@@ -76,17 +79,21 @@ def is_in_Equations(params: Optional[CompletionParams] = None) -> bool:
 @brian_server.feature(TEXT_DOCUMENT_DID_OPEN)
 async def did_open(ls, params: DidOpenTextDocumentParams):
     """Text document did open notification."""
-    text = brian_server.workspace.get_document(params.text_document.uri).source
+    text = brian_server.workspace.get_text_document(params.text_document.uri).source
     diagnostics = get_diagnostics(text)
-    ls.publish_diagnostics(params.text_document.uri, diagnostics)
+    ls.text_document_publish_diagnostics(
+        PublishDiagnosticsParams(uri=params.text_document.uri, diagnostics=diagnostics)
+    )
 
 
 @brian_server.feature(TEXT_DOCUMENT_DID_CHANGE)
 async def did_change(ls, params: DidChangeTextDocumentParams):
     """Text document did change notification."""
-    text = brian_server.workspace.get_document(params.text_document.uri).source
+    text = brian_server.workspace.get_text_document(params.text_document.uri).source
     diagnostics = get_diagnostics(text)
-    ls.publish_diagnostics(params.text_document.uri, diagnostics)
+    ls.text_document_publish_diagnostics(
+        PublishDiagnosticsParams(uri=params.text_document.uri, diagnostics=diagnostics)
+    )
 
 
 def get_diagnostics(text):
@@ -123,7 +130,9 @@ def get_diagnostics(text):
 )
 def completions(params: Optional[CompletionParams] = None) -> CompletionList:
     """Returns completion items."""
-
+    if not params:
+        return CompletionList(is_incomplete=False, items=[])
+    
     if is_in_Equations(params):
 
         from brian2.core.functions import DEFAULT_CONSTANTS, DEFAULT_FUNCTIONS
@@ -148,10 +157,8 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
         special_symbols = [CompletionItem(label=u, kind=CompletionItemKind.Unit)
                     for u in list_of_special_symbols]
 
-
-
         cursor_pos = params.position.character
-        text = brian_server.workspace.get_document(params.text_document.uri).source
+        text = brian_server.workspace.get_text_document(params.text_document.uri).source
         line_content = text.splitlines()[params.position.line][:cursor_pos]
         pre_line_content = text.splitlines()[params.position.line-1][:cursor_pos]
         if '=' in line_content:
@@ -195,5 +202,6 @@ def completions(params: Optional[CompletionParams] = None) -> CompletionList:
             is_incomplete=False,
             items=constants + functions+units_all_units +units_fundamentalunits +units_stdunits +special_symbols,
             )
+    return CompletionList(is_incomplete=False, items=[])
 
 

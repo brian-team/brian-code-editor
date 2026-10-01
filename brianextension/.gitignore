@@ -6,4 +6,5 @@ client/server
 env
 pygls.log
 *.py[cod]
+*.vsix
 bundled/libs/
